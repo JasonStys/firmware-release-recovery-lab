@@ -44,16 +44,16 @@ production bootloader or hardware-security expertise.
 
 ## Major features
 
-| Feature | What it demonstrates |
-| --- | --- |
-| Signed packages | Canonical JSON metadata, SHA-256 image binding, and Ed25519 verification before staging |
-| Compatibility policy | Hardware allowlist, schema version, image size, boot-attempt bounds, and monotonic version floor |
-| Pure transition engine | Stage, activate, select boot, confirm health, fail health, and rollback without filesystem coupling |
-| Durable state adapter | Synchronized temporary write, prior-state recovery copy, rename, validation, and newest-valid generation selection |
-| Fault injection | Six named commit boundaries exercised during both stage and activation |
-| Auditability | Monotonic generations and bounded causal event history persisted with each transition |
-| CLI | Human-readable status plus JSON output for automation and evidence capture |
-| Verification | Unit, integration, property, tamper, recovery, Clippy, rustfmt, docs, and dependency-advisory gates |
+| Feature                | What it demonstrates                                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Signed packages        | Canonical JSON metadata, SHA-256 image binding, and Ed25519 verification before staging                            |
+| Compatibility policy   | Hardware allowlist, schema version, image size, boot-attempt bounds, and monotonic version floor                   |
+| Pure transition engine | Stage, activate, select boot, confirm health, fail health, and rollback without filesystem coupling                |
+| Durable state adapter  | Synchronized temporary write, prior-state recovery copy, rename, validation, and newest-valid generation selection |
+| Fault injection        | Six named commit boundaries exercised during both stage and activation                                             |
+| Auditability           | Monotonic generations and bounded causal event history persisted with each transition                              |
+| CLI                    | Human-readable status plus JSON output for automation and evidence capture                                         |
+| Verification           | Unit, integration, property, tamper, recovery, Clippy, rustfmt, docs, and dependency-advisory gates                |
 
 ## Architecture
 
@@ -121,19 +121,19 @@ See [SECURITY.md](SECURITY.md), [threat model](docs/threat-model.md), and
 
 ## Repository guide
 
-| Area | Summary |
-| --- | --- |
-| `src/model.rs` | Persisted types, strict versions, slot identities, audit records, and invariants |
-| `src/package.rs` | Canonical manifests, package I/O, policy checks, signature/digest verification |
-| `src/transition.rs` | Side-effect-free lifecycle decisions |
-| `src/store.rs` | Simulated slots and recoverable metadata commits |
-| `src/fault.rs` | Named one-shot interruption injection |
-| `src/agent.rs` | Ordered orchestration and campaign reporting |
-| `src/main.rs` | `fwlab` command definitions and output |
-| `tests/` | Property and persisted end-to-end behavior |
-| `scripts/` | Local/CI validation, source-header checks, and exact code indexing |
-| `docs/` | Architecture, decisions, safety analysis, operations, tests, and evidence |
-| `.github/` | Read-only CI/security workflows and dependency maintenance |
+| Area                | Summary                                                                          |
+| ------------------- | -------------------------------------------------------------------------------- |
+| `src/model.rs`      | Persisted types, strict versions, slot identities, audit records, and invariants |
+| `src/package.rs`    | Canonical manifests, package I/O, policy checks, signature/digest verification   |
+| `src/transition.rs` | Side-effect-free lifecycle decisions                                             |
+| `src/store.rs`      | Simulated slots and recoverable metadata commits                                 |
+| `src/fault.rs`      | Named one-shot interruption injection                                            |
+| `src/agent.rs`      | Ordered orchestration and campaign reporting                                     |
+| `src/main.rs`       | `fwlab` command definitions and output                                           |
+| `tests/`            | Property and persisted end-to-end behavior                                       |
+| `scripts/`          | Local/CI validation, source-header checks, and exact code indexing               |
+| `docs/`             | Architecture, decisions, safety analysis, operations, tests, and evidence        |
+| `.github/`          | Read-only CI/security workflows and dependency maintenance                       |
 
 Every authored file is summarized in [the repository map](docs/repository-map.md), and exact
 function/type locations are generated in [the code index](docs/code-index.md).
@@ -164,7 +164,9 @@ Contributions follow [CONTRIBUTING.md](CONTRIBUTING.md). Design choices are capt
 starting with [Rust for the state engine](docs/adr/0001-rust-state-engine.md) and
 [recoverable JSON metadata](docs/adr/0002-recoverable-json-metadata.md).
 
+The [latest maintenance audit](docs/reports/maintenance-audit-2026-09-18.md) records the current
+hosted verification and dependency review.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
-
