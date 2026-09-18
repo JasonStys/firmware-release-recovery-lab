@@ -15,7 +15,7 @@ partially committed metadata.
 | Property | Generated versions and attempt budgets | Confirmation promotes exactly; exhaustion returns to A |
 | Fault | Every state commit boundary for stage and activation | 12 scenarios per campaign iteration |
 | Static | Formatting, Clippy pedantic/nursery, compiler warnings | CI denies warnings |
-| Supply chain | Locked dependencies and RustSec advisories | Scheduled security workflow |
+| Supply chain | Locked dependencies and RustSec advisories | Version-locked scheduled security workflow |
 | Documentation | Rustdoc build, generated code index, required artifact/header scan | CI contract checks |
 
 ## Determinism
@@ -52,4 +52,3 @@ cargo run --release --locked -- fault-campaign --iterations 100 --output artifac
 The campaign is not hardware-in-the-loop, a real power-cut test, or evidence of atomicity on a
 specific filesystem. Coverage percentage is intentionally not used as a substitute for
 invariant and failure-mode coverage.
-
