@@ -1,0 +1,52 @@
+[package]
+name = "firmware-release-recovery-lab"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "A deterministic A/B firmware release, rollback, and interruption simulator"
+license = "MIT"
+repository = "https://github.com/JasonStys/firmware-release-recovery-lab"
+keywords = ["firmware", "recovery", "state-machine", "rust", "simulation"]
+categories = ["command-line-utilities", "simulation"]
+
+[lib]
+name = "firmware_recovery"
+path = "src/lib.rs"
+
+[[bin]]
+name = "fwlab"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.100"
+clap = { version = "4.5.48", features = ["derive"] }
+ed25519-dalek = "2.2.0"
+hex = "0.4.3"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+sha2 = "0.10.9"
+tempfile = "3.23.0"
+thiserror = "2.0.16"
+
+[dev-dependencies]
+proptest = "1.8.0"
+
+[profile.release]
+codegen-units = 1
+lto = "thin"
+strip = "symbols"
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+nursery = { level = "warn", priority = -1 }
+# Public APIs return the single documented `LabError` taxonomy; repeating every variant on
+# each small transition obscures the state-machine contract. Platform-gated directory sync
+# also appears infallible on Windows even though its Unix implementation performs I/O.
+missing_errors_doc = "allow"
+missing_const_for_fn = "allow"
+unnecessary_wraps = "allow"

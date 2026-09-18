@@ -1,0 +1,7 @@
+# File: rustfmt.toml
+# Purpose: Keeps formatting deterministic on the pinned stable toolchain.
+# Variables: edition selects Rust 2024 syntax rules; newline_style normalizes cross-platform output.
+edition = "2024"
+newline_style = "Unix"
+use_field_init_shorthand = true
+

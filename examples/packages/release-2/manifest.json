@@ -1,0 +1,18 @@
+{
+  "payload": {
+    "schema_version": 1,
+    "release_id": "release-2.0.0",
+    "version": {
+      "major": 2,
+      "minor": 0,
+      "patch": 0
+    },
+    "compatible_hardware": [
+      "edge-controller-v1"
+    ],
+    "image_size": 27,
+    "image_sha256": "f6f4958f116e6611112da62a7c73602221551c74f5ce1fcbb6daae2c70a1333c",
+    "max_boot_attempts": 3
+  },
+  "signature_ed25519": "9babb1d6fa646e56857fd9fc4dcc1600674df676588fe91a175ece08bf5724fc81a1d4438a2b54642519f19859105429f2aadaab6ad909fa4621a1aa74e15c05"
+}

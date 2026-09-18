@@ -1,0 +1,81 @@
+# File: ci.yml
+# Purpose: Builds, lints, tests, documents, and fault-tests the Rust simulator.
+# Variables: CARGO_TERM_COLOR controls logs; RUSTFLAGS promotes compiler warnings to failures.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -Dwarnings
+
+jobs:
+  quality:
+    name: Format, lint, test, and document
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install 1.90.0 --profile minimal --component clippy,rustfmt
+
+      - name: Cache Cargo artifacts
+        uses: Swatinem/rust-cache@49a0bdc70d2e1b713ca9e2869b211fcce03d3c1c # v2
+
+      - name: Verify formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run Clippy with warnings denied
+        run: cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: Run all tests
+        run: cargo test --all-targets --all-features --locked
+
+      - name: Build release binary
+        run: cargo build --release --locked
+
+      - name: Build API documentation
+        run: cargo doc --no-deps --document-private-items --locked
+
+      - name: Validate repository contracts
+        run: python scripts/verify_repo.py
+
+      - name: Verify generated code index
+        run: |
+          python scripts/generate_code_index.py
+          git diff --exit-code -- docs/code-index.md
+
+  recovery-campaign:
+    name: 1,200 interruption scenarios
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install 1.90.0 --profile minimal
+
+      - name: Cache Cargo artifacts
+        uses: Swatinem/rust-cache@49a0bdc70d2e1b713ca9e2869b211fcce03d3c1c # v2
+
+      - name: Run deterministic power-loss campaign
+        run: cargo run --release --locked -- fault-campaign --iterations 100 --output artifacts/fault-campaign.json
+
+      - name: Upload campaign evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: fault-campaign-${{ github.sha }}
+          path: artifacts/fault-campaign.json
+          if-no-files-found: error
+          retention-days: 30
+

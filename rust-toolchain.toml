@@ -1,0 +1,8 @@
+# File: rust-toolchain.toml
+# Purpose: Pins the repository to a supported stable compiler and required quality components.
+# Variables: `channel`, `profile`, and `components` are declarative toolchain settings.
+[toolchain]
+channel = "1.90.0"
+profile = "minimal"
+components = ["clippy", "rustfmt"]
+

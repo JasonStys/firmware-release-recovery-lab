@@ -1,0 +1,13 @@
+# File: .gitignore
+# Purpose: Keeps compiler output, local labs, generated artifacts, and editor files untracked.
+# Variables: none; patterns are repository-relative unless noted.
+/target/
+/artifacts/
+/demo/
+*.tmp
+*.pending
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+

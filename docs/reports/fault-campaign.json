@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "iterations": 100,
+  "scenarios": 1200,
+  "recovered": 1200,
+  "safety_invariants_preserved": 1200,
+  "stable_recoveries": 400,
+  "forward_progress_recoveries": 800,
+  "elapsed_milliseconds": 12962
+}
