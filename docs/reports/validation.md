@@ -17,6 +17,7 @@
 | Property tests | PASS | 2 properties passed, 0 failed |
 | Release build | PASS | Optimized `fwlab` binary built from locked dependencies |
 | Fault campaign | PASS | 1,200/1,200 recovered; 1,200/1,200 preserved invariants |
+| Dependency audit | PASS | `cargo-audit` 0.22.2 scanned 93 locked crate dependencies against 1,247 RustSec advisories |
 | Rustdoc | PASS | Library and private-item documentation generated |
 | Repository contract | PASS | Required artifacts, code headers, and neutral wording checked |
 
@@ -51,4 +52,3 @@ not a real-time or production-storage guarantee.
 Tests simulate process interruption around filesystem calls, not physical power removal or torn
 storage writes. Cryptographic key management, secure boot, concurrent writers, protected
 counters, network delivery, and hardware-in-the-loop validation remain out of scope.
-
