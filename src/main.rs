@@ -123,6 +123,15 @@ enum Command {
         #[arg(long)]
         output: Option<PathBuf>,
     },
+    /// Review all device compatibility and rehearse cohorts without changing any device.
+    FleetPreflight {
+        /// Closed JSON plan: explicit device roots, policies, outcomes and cohort size.
+        #[arg(long)]
+        inventory: PathBuf,
+        /// Signed synthetic release directory to verify.
+        #[arg(long)]
+        package: PathBuf,
+    },
 }
 
 /// Parses the CLI, reports errors without panicking, and returns a process status.
@@ -243,6 +252,16 @@ fn run(cli: Cli) -> Result<()> {
                 println!("wrote campaign report to {}", path.display());
             }
             println!("{json}");
+        }
+        Command::FleetPreflight { inventory, package } => {
+            let plan = firmware_recovery::preflight::FleetPlan::load(&inventory)?;
+            let package = ReleasePackage::load(&package)?;
+            let report = firmware_recovery::preflight::review(
+                &plan,
+                &package,
+                &demo_signing_key().verifying_key(),
+            )?;
+            println!("{}", serde_json::to_string_pretty(&report)?);
         }
     }
     Ok(())

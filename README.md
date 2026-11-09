@@ -30,6 +30,16 @@ bash scripts/validate.sh
 
 ## Why this project exists
 
+Release engineers can now run a **read-only fleet preflight** before staging:
+verify one signed package against explicit device policies/snapshots and rehearse
+ordered canary cohorts with declared confirmation or exhausted-trial outcomes.
+Blocked/rolled-back cohorts stop later rehearsal while all compatibility results
+remain visible. Hash-bound JSON records exactly which inputs were reviewed.
+See the [complete fleet workflow and sample plan](docs/fleet-preflight.md).
+This does not change device state or measure real health. Activation also enforces
+the signed boot ceiling, rejects trial-budget resets and prevents selection of an
+older previously verified image; rejected staging preserves existing slot bytes.
+
 An update system is credible only if its failure behavior is explicit. This lab makes four
 invariants executable and reviewable:
 
@@ -125,12 +135,16 @@ See [SECURITY.md](SECURITY.md), [threat model](docs/threat-model.md), and
 | ------------------- | -------------------------------------------------------------------------------- |
 | `src/model.rs`      | Persisted types, strict versions, slot identities, audit records, and invariants |
 | `src/package.rs`    | Canonical manifests, package I/O, policy checks, signature/digest verification   |
+| `src/preflight.rs` | Bounded read-only fleet compatibility, input fingerprints and cohort rehearsal |
 | `src/transition.rs` | Side-effect-free lifecycle decisions                                             |
 | `src/store.rs`      | Simulated slots and recoverable metadata commits                                 |
 | `src/fault.rs`      | Named one-shot interruption injection                                            |
 | `src/agent.rs`      | Ordered orchestration and campaign reporting                                     |
 | `src/main.rs`       | `fwlab` command definitions and output                                           |
 | `tests/`            | Property and persisted end-to-end behavior                                       |
+| `tests/preflight.rs` | Actual CLI, cohort-stop, file-preservation, signed-ceiling and downgrade regressions |
+| `docs/fleet-preflight.md` | Realistic sample inventory, outcomes, migration and bounds |
+| `docs/reports/practical-workflows-2026-11-09.md` | Point-in-time native validation and known limits |
 | `scripts/`          | Local/CI validation, source-header checks, and exact code indexing               |
 | `docs/`             | Architecture, decisions, safety analysis, operations, tests, and evidence        |
 | `.github/`          | Read-only CI/security workflows and dependency maintenance                       |

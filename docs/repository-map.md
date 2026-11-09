@@ -45,8 +45,12 @@ Every authored or generated repository file has one primary responsibility.
 | `src/main.rs` | Defines `fwlab` commands, safe path checks, dispatch, and output |
 | `src/model.rs` | Defines versions, slots, phases, records, audit events, errors, and invariants |
 | `src/package.rs` | Creates, loads, writes, validates, and verifies release packages |
+| `src/preflight.rs` | Reviews explicit fleet compatibility and pure cohort outcomes without writes |
 | `src/store.rs` | Owns slot files plus primary/backup metadata persistence and recovery |
 | `src/transition.rs` | Implements pure stage, activation, boot, confirmation, failure, and rollback |
 | `tests/end_to_end.rs` | Exercises persisted rollback through reconstructed public agents |
 | `tests/lifecycle_properties.rs` | Generates bounded versions/attempt budgets to test lifecycle properties |
+| `tests/preflight.rs` | Real CLI/byte preservation, cohort stop and rejected lifecycle regressions |
+| `docs/fleet-preflight.md` | Plan schema, sample walkthrough, migration and interpretation |
+| `docs/reports/practical-workflows-2026-11-09.md` | Observed native validation and remaining boundaries |
 

@@ -167,6 +167,9 @@ pub struct SlotRecord {
     pub image_sha256: String,
     /// True only after size, hash, signature, and compatibility checks pass.
     pub verified: bool,
+    /// Signed candidate boot ceiling; legacy records must be restaged before activation.
+    #[serde(default)]
+    pub max_boot_attempts: Option<u8>,
 }
 
 /// Deterministic audit entry persisted in the same transaction as lifecycle state.
@@ -212,6 +215,7 @@ impl BootMetadata {
                 version,
                 image_sha256,
                 verified: true,
+                max_boot_attempts: None,
             },
         );
         Self {
