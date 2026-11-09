@@ -60,8 +60,9 @@ impl UpdateAgent {
             current.confirmed_version()?,
         )?;
         let target = current.confirmed.other();
-        self.store.write_slot(target, package)?;
         let next = transition::stage(&current, &package.manifest.payload)?;
+        // Reject an in-flight trial before touching the candidate's image bytes.
+        self.store.write_slot(target, package)?;
         self.store.commit_state(&next, injector)?;
         Ok(next)
     }

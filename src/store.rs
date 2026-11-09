@@ -5,7 +5,7 @@
 
 use std::{
     fs::{self, OpenOptions},
-    io::Write,
+    io::{Read, Write},
     path::{Path, PathBuf},
 };
 
@@ -76,7 +76,15 @@ impl LabStore {
         let mut valid = candidates
             .iter()
             .filter_map(|path| {
-                let bytes = fs::read(path).ok()?;
+                let file = fs::File::open(path).ok()?;
+                if !file.metadata().ok()?.is_file() {
+                    return None;
+                }
+                let mut bytes = Vec::new();
+                file.take(131_073).read_to_end(&mut bytes).ok()?;
+                if bytes.len() > 131_072 {
+                    return None;
+                }
                 let state: BootMetadata = serde_json::from_slice(&bytes).ok()?;
                 state.validate_invariants().ok()?;
                 Some(state)

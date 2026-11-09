@@ -28,18 +28,18 @@ are refreshed in CI so file headers can remain useful as implementations evolve.
 | 30 | `fn` | `new` |
 | 39 | `fn` | `initialize` |
 | 51 | `fn` | `stage` |
-| 70 | `fn` | `activate` |
-| 83 | `fn` | `boot` |
-| 96 | `fn` | `confirm_health` |
-| 107 | `fn` | `fail_health` |
-| 119 | `fn` | `status` |
-| 126 | `struct` | `CampaignReport` |
-| 146 | `fn` | `run_fault_campaign` |
-| 199 | `fn` | `run_interrupted_stage` |
-| 223 | `fn` | `run_interrupted_activation` |
-| 248 | `fn` | `classify_recovery` |
-| 266 | `mod` | `tests` |
-| 270 | `fn` | `campaign_recovers_every_injected_boundary` |
+| 71 | `fn` | `activate` |
+| 84 | `fn` | `boot` |
+| 97 | `fn` | `confirm_health` |
+| 108 | `fn` | `fail_health` |
+| 120 | `fn` | `status` |
+| 127 | `struct` | `CampaignReport` |
+| 147 | `fn` | `run_fault_campaign` |
+| 200 | `fn` | `run_interrupted_stage` |
+| 224 | `fn` | `run_interrupted_activation` |
+| 249 | `fn` | `classify_recovery` |
+| 267 | `mod` | `tests` |
+| 271 | `fn` | `campaign_recovers_every_injected_boundary` |
 
 ## `src/crypto.rs`
 
@@ -71,13 +71,14 @@ are refreshed in CI so file headers can remain useful as implementations evolve.
 
 | Line | Kind | Name |
 | ---: | --- | --- |
-| 12 | `mod` | `agent` |
-| 13 | `mod` | `crypto` |
-| 14 | `mod` | `fault` |
-| 15 | `mod` | `model` |
-| 16 | `mod` | `package` |
-| 17 | `mod` | `store` |
-| 18 | `mod` | `transition` |
+| 13 | `mod` | `agent` |
+| 14 | `mod` | `crypto` |
+| 15 | `mod` | `fault` |
+| 16 | `mod` | `model` |
+| 17 | `mod` | `package` |
+| 18 | `mod` | `preflight` |
+| 19 | `mod` | `store` |
+| 20 | `mod` | `transition` |
 
 ## `src/main.rs`
 
@@ -85,11 +86,11 @@ are refreshed in CI so file headers can remain useful as implementations evolve.
 | ---: | --- | --- |
 | 18 | `struct` | `Cli` |
 | 26 | `enum` | `Command` |
-| 129 | `fn` | `main` |
-| 142 | `fn` | `run` |
-| 252 | `fn` | `agent` |
-| 265 | `fn` | `default_agent` |
-| 270 | `fn` | `print_state` |
+| 138 | `fn` | `main` |
+| 151 | `fn` | `run` |
+| 271 | `fn` | `agent` |
+| 284 | `fn` | `default_agent` |
+| 289 | `fn` | `print_state` |
 
 ## `src/model.rs`
 
@@ -107,14 +108,14 @@ are refreshed in CI so file headers can remain useful as implementations evolve.
 | 141 | `enum` | `LifecyclePhase` |
 | 154 | `struct` | `DeviceProfile` |
 | 163 | `struct` | `SlotRecord` |
-| 174 | `struct` | `AuditEvent` |
-| 185 | `struct` | `BootMetadata` |
-| 207 | `fn` | `initial` |
-| 234 | `fn` | `confirmed_version` |
-| 242 | `fn` | `validate_invariants` |
-| 275 | `mod` | `tests` |
-| 279 | `fn` | `version_parsing_is_strict_and_ordered` |
-| 288 | `fn` | `initial_state_preserves_a_verified_image` |
+| 177 | `struct` | `AuditEvent` |
+| 188 | `struct` | `BootMetadata` |
+| 210 | `fn` | `initial` |
+| 238 | `fn` | `confirmed_version` |
+| 246 | `fn` | `validate_invariants` |
+| 279 | `mod` | `tests` |
+| 283 | `fn` | `version_parsing_is_strict_and_ordered` |
+| 292 | `fn` | `initial_state_preserves_a_verified_image` |
 
 ## `src/package.rs`
 
@@ -127,12 +128,26 @@ are refreshed in CI so file headers can remain useful as implementations evolve.
 | 94 | `fn` | `create` |
 | 121 | `struct` | `ReleasePackage` |
 | 130 | `fn` | `load` |
-| 137 | `fn` | `write` |
-| 146 | `fn` | `verify` |
-| 179 | `mod` | `tests` |
-| 184 | `fn` | `device` |
-| 192 | `fn` | `package_detects_image_tampering` |
-| 214 | `fn` | `policy_rejects_wrong_hardware_before_staging` |
+| 138 | `fn` | `write` |
+| 147 | `fn` | `verify` |
+| 180 | `fn` | `bounded_file` |
+| 198 | `mod` | `tests` |
+| 203 | `fn` | `device` |
+| 211 | `fn` | `package_detects_image_tampering` |
+| 233 | `fn` | `policy_rejects_wrong_hardware_before_staging` |
+
+## `src/preflight.rs`
+
+| Line | Kind | Name |
+| ---: | --- | --- |
+| 23 | `enum` | `TrialOutcome` |
+| 33 | `struct` | `PlannedDevice` |
+| 47 | `struct` | `FleetPlan` |
+| 58 | `fn` | `load` |
+| 71 | `fn` | `validate` |
+| 98 | `struct` | `DeviceReview` |
+| 119 | `struct` | `FleetReview` |
+| 133 | `fn` | `review` |
 
 ## `src/store.rs`
 
@@ -144,13 +159,13 @@ are refreshed in CI so file headers can remain useful as implementations evolve.
 | 45 | `fn` | `initialize` |
 | 58 | `fn` | `write_slot` |
 | 74 | `fn` | `load_state` |
-| 90 | `fn` | `commit_state` |
-| 125 | `fn` | `slot_dir` |
-| 131 | `fn` | `write_and_sync` |
-| 143 | `fn` | `replace_file` |
-| 152 | `fn` | `sync_directory` |
-| 161 | `mod` | `tests` |
-| 173 | `fn` | `interruption_recovers_old_or_new_valid_generation` |
+| 98 | `fn` | `commit_state` |
+| 133 | `fn` | `slot_dir` |
+| 139 | `fn` | `write_and_sync` |
+| 151 | `fn` | `replace_file` |
+| 160 | `fn` | `sync_directory` |
+| 169 | `mod` | `tests` |
+| 181 | `fn` | `interruption_recovers_old_or_new_valid_generation` |
 
 ## `src/transition.rs`
 
@@ -158,16 +173,16 @@ are refreshed in CI so file headers can remain useful as implementations evolve.
 | ---: | --- | --- |
 | 14 | `fn` | `commit_event` |
 | 28 | `fn` | `stage` |
-| 57 | `fn` | `activate` |
-| 98 | `fn` | `select_boot` |
-| 122 | `fn` | `confirm_health` |
-| 143 | `fn` | `record_boot_failure` |
-| 164 | `fn` | `rollback` |
-| 186 | `mod` | `tests` |
-| 191 | `fn` | `initial` |
-| 195 | `fn` | `candidate` |
-| 208 | `fn` | `happy_path_promotes_only_after_health_confirmation` |
-| 220 | `fn` | `exhausted_attempt_budget_rolls_back_deterministically` |
+| 58 | `fn` | `activate` |
+| 117 | `fn` | `select_boot` |
+| 141 | `fn` | `confirm_health` |
+| 162 | `fn` | `record_boot_failure` |
+| 183 | `fn` | `rollback` |
+| 205 | `mod` | `tests` |
+| 210 | `fn` | `initial` |
+| 214 | `fn` | `candidate` |
+| 227 | `fn` | `happy_path_promotes_only_after_health_confirmation` |
+| 239 | `fn` | `exhausted_attempt_budget_rolls_back_deterministically` |
 
 ## `tests/end_to_end.rs`
 
@@ -183,3 +198,21 @@ are refreshed in CI so file headers can remain useful as implementations evolve.
 | 20 | `fn` | `candidate` |
 | 34 | `fn` | `successful_health_confirmation_promotes_exact_candidate` |
 | 54 | `fn` | `exhausted_candidate_always_returns_to_known_good` |
+
+## `tests/preflight.rs`
+
+| Line | Kind | Name |
+| ---: | --- | --- |
+| 17 | `fn` | `profile` |
+| 24 | `fn` | `package` |
+| 39 | `fn` | `agent` |
+| 47 | `fn` | `setup` |
+| 56 | `fn` | `bytes` |
+| 70 | `fn` | `cohorts_stop_after_failure_but_preserve_all_compatibility_rows_and_bytes` |
+| 118 | `fn` | `compatible_fleet_completes_and_wrong_hardware_or_floor_is_not_ready` |
+| 140 | `fn` | `active_trial_rejected_before_any_slot_or_metadata_write` |
+| 170 | `fn` | `corrupt_package_or_state_never_becomes_eligible` |
+| 196 | `fn` | `duplicate_ids_resolved_roots_and_closed_bounds_rejected` |
+| 245 | `fn` | `bounded_input_and_actual_cli_preserve_sources` |
+| 281 | `fn` | `signed_attempt_ceiling_and_legacy_restage_boundary` |
+| 315 | `fn` | `previously_verified_inactive_image_cannot_downgrade_new_confirmed_release` |

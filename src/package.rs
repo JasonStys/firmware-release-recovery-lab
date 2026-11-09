@@ -3,7 +3,7 @@
 //! File map: `ManifestPayload` is the canonical signed contract; `SignedManifest`
 //! carries the signature; `ReleasePackage` binds the manifest to image bytes.
 
-use std::{fs, path::Path};
+use std::{fs, io::Read, path::Path};
 
 use ed25519_dalek::{SigningKey, VerifyingKey};
 use serde::{Deserialize, Serialize};
@@ -126,10 +126,11 @@ pub struct ReleasePackage {
 }
 
 impl ReleasePackage {
-    /// Loads `manifest.json` and `image.bin` from a package directory.
+    /// Loads ordinary manifest/image files, bounded to 64 KiB and 16 MiB respectively.
     pub fn load(directory: &Path) -> Result<Self, LabError> {
-        let manifest = serde_json::from_slice(&fs::read(directory.join("manifest.json"))?)?;
-        let image = fs::read(directory.join("image.bin"))?;
+        let manifest =
+            serde_json::from_slice(&bounded_file(&directory.join("manifest.json"), 65_536)?)?;
+        let image = bounded_file(&directory.join("image.bin"), 16_777_216)?;
         Ok(Self { manifest, image })
     }
 
@@ -173,6 +174,24 @@ impl ReleasePackage {
         }
         Ok(())
     }
+}
+
+/// Bound local package reads before allocation; paths remain explicitly operator-selected.
+fn bounded_file(path: &Path, limit: u64) -> Result<Vec<u8>, LabError> {
+    let file = fs::File::open(path)?;
+    if !file.metadata()?.is_file() {
+        return Err(LabError::Validation(
+            "ordinary package file required".into(),
+        ));
+    }
+    let mut bytes = Vec::new();
+    file.take(limit + 1).read_to_end(&mut bytes)?;
+    if bytes.len() as u64 > limit {
+        return Err(LabError::Validation(
+            "package file exceeds read limit".into(),
+        ));
+    }
+    Ok(bytes)
 }
 
 #[cfg(test)]

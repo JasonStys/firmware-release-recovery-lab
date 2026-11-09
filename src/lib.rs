@@ -6,6 +6,7 @@
 //! - `fault`: deterministic interruption injection.
 //! - `model`: persisted domain types and invariants.
 //! - `package`: package creation, loading, and verification.
+//! - `preflight`: bounded read-only fleet compatibility and trial rehearsal.
 //! - `store`: bounded-path, atomic filesystem persistence.
 //! - `transition`: pure A/B lifecycle state transitions.
 
@@ -14,6 +15,7 @@ pub mod crypto;
 pub mod fault;
 pub mod model;
 pub mod package;
+pub mod preflight;
 pub mod store;
 pub mod transition;
 

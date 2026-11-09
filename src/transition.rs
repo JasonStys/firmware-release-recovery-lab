@@ -41,6 +41,7 @@ pub fn stage(current: &BootMetadata, manifest: &ManifestPayload) -> Result<BootM
             version: manifest.version,
             image_sha256: manifest.image_sha256.clone(),
             verified: true,
+            max_boot_attempts: Some(manifest.max_boot_attempts),
         },
     );
     next.phase = LifecyclePhase::Staged;
@@ -60,6 +61,11 @@ pub fn activate(
     max_boot_attempts: u8,
 ) -> Result<BootMetadata, LabError> {
     current.validate_invariants()?;
+    if current.pending.is_some() {
+        return Err(LabError::Validation(
+            "cannot reset an active trial's boot budget".into(),
+        ));
+    }
     if target == current.confirmed {
         return Err(LabError::Validation(
             "activation target must be the inactive slot".into(),
@@ -74,9 +80,22 @@ pub fn activate(
             "activation target has not been verified".into(),
         ));
     }
+    if record.version < current.confirmed_version()? {
+        return Err(LabError::Validation(
+            "activation would downgrade the confirmed version".into(),
+        ));
+    }
     if !(1..=10).contains(&max_boot_attempts) {
         return Err(LabError::Validation(
             "activation attempts must be between 1 and 10".into(),
+        ));
+    }
+    let signed_limit = record.max_boot_attempts.ok_or_else(|| {
+        LabError::Validation("legacy candidate lacks signed attempt ceiling; restage it".into())
+    })?;
+    if !(1..=10).contains(&signed_limit) || max_boot_attempts > signed_limit {
+        return Err(LabError::Validation(
+            "activation exceeds signed boot-attempt ceiling".into(),
         ));
     }
 
