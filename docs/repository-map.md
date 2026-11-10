@@ -54,3 +54,9 @@ Every authored or generated repository file has one primary responsibility.
 | `docs/fleet-preflight.md` | Plan schema, sample walkthrough, migration and interpretation |
 | `docs/reports/practical-workflows-2026-11-09.md` | Observed native validation and remaining boundaries |
 
+
+## CodeQL setup files
+
+- `.github/workflows/codeql.yml`: pinned, least-privilege supported-language extraction, security-extended queries and actual SARIF upload.
+- `docs/codeql-analysis.md`: diagnosed coverage gap, language/build modes, trigger/permission contract and exact-source findings review.
+- `docs/reports/codeql-setup-2026-11-09.md`: point-in-time local validation and explicit hosted-analysis limits.
