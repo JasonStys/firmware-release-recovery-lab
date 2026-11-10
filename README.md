@@ -1,12 +1,15 @@
 # Firmware Release & Recovery Lab
 
 [![CI](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/codeql.yml/badge.svg)](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/codeql.yml)
 [![Dependency security](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/security.yml/badge.svg)](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/security.yml)
 
 A safe, deterministic Rust simulator for reasoning about signed A/B firmware updates,
 bounded trial boots, health confirmation, rollback, and interrupted durable writes. It
 operates only on local directories and synthetic byte strings: it does not flash devices,
 implement secure boot, download firmware, or access hardware.
+
+The [CodeQL analysis contract](docs/codeql-analysis.md) covers the actual Rust simulator, Python repository tools and Actions with security-extended queries. Rust uses its officially supported no-build extraction, alongside the existing real Cargo build/tests and RustSec audit. Missing analysis is never treated as zero findings.
 
 ## 60-second quickstart
 

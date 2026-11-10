@@ -52,3 +52,7 @@ cargo run --release --locked -- fault-campaign --iterations 100 --output artifac
 The campaign is not hardware-in-the-loop, a real power-cut test, or evidence of atomicity on a
 specific filesystem. Coverage percentage is intentionally not used as a substitute for
 invariant and failure-mode coverage.
+
+## CodeQL source-security evidence
+
+The separate [CodeQL workflow](../.github/workflows/codeql.yml) creates genuine supported-language databases and uses security-extended queries. Read [the analysis contract](codeql-analysis.md) for each extraction mode and [the setup report](reports/codeql-setup-2026-11-09.md) for observations. Existing runtime/property/fault/browser/sanitizer and dependency gates remain unchanged. Syntax validation is not an executed scan; uploaded analyses and open findings must be inspected at the exact current-main SHA. Missing or unauthorized analysis is reported as unavailable rather than passing. Real findings require source-level triage and a regression reproducing the actual boundary.

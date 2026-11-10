@@ -58,3 +58,7 @@ deployment.
 - [ADR-0001: Rust for the state engine](adr/0001-rust-state-engine.md)
 - [ADR-0002: Recoverable JSON metadata](adr/0002-recoverable-json-metadata.md)
 
+
+## Static analysis boundary
+
+Rust uses CodeQL build mode none, the supported Rust mode. Its rust-analyzer extractor can compile/run locked build scripts and procedural macros; this is not full executable compilation or a substitute for Cargo/Clippy/fault-campaign evidence. Python scripts and Actions are separate supported source lanes. The analysis job uploads findings but cannot deploy or access user configuration. [CodeQL scope and review](codeql-analysis.md) keeps scanner success, exact-source analysis availability and actual findings distinct.

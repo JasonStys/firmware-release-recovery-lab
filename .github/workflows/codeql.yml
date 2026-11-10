@@ -1,0 +1,64 @@
+# File: codeql.yml
+# Purpose: Produce genuine security-extended CodeQL databases/findings for supported authored languages.
+# Variables: matrix.language/build-mode select source extraction; no secrets, live devices or deployments are used.
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "43 8 * * 2"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codeql-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: CodeQL (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: rust
+            build-mode: none
+          - language: python
+            build-mode: none
+          - language: actions
+            build-mode: none
+    steps:
+      - name: Check out the scanned source without persisted credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the repository's pinned Rust toolchain
+        if: matrix.language == 'rust'
+        run: rustup toolchain install 1.90.0 --profile minimal
+      - name: Resolve only the locked Rust dependency graph
+        if: matrix.language == 'rust'
+        run: cargo fetch --locked
+      - name: Initialize the supported language and security-extended suite
+        uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: security-extended
+          dependency-caching: false
+          trap-caching: false
+      - name: Analyze and upload actual language findings
+        uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        with:
+          category: /language:${{ matrix.language }}
+          upload-database: false
+          wait-for-processing: true

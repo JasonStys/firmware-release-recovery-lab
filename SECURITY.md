@@ -30,3 +30,7 @@ The scheduled RustSec workflow checks `Cargo.lock`. A relevant advisory should b
 triaged for reachability and impact, fixed or mitigated, and documented in the changelog. CI
 actions are pinned to immutable commits and updated through reviewed Dependabot proposals.
 
+
+## Source security analysis
+
+The supported Rust, Python and Actions [CodeQL lanes](docs/codeql-analysis.md) use security-extended queries and immutable action pins. A completed job, an available exact-source analysis and its reported findings are separate evidence. Unavailable analysis is not zero clearance, and no automated finding is dismissed or suppressed by this setup. RustSec and runtime/fault tests retain their existing scope.

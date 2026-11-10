@@ -38,3 +38,7 @@ user and operating system are trusted for this educational model.
 The embedded signing seed is public by design. Substituting a private key does not transform
 this simulator into a secure updater; the omitted system controls remain essential.
 
+
+## Code scanning and its limits
+
+[CodeQL](codeql-analysis.md) now has explicit supported-language lanes and immutable Actions pins. It complements dependency advisories and independent runtime tests; a green workflow is not a zero-findings assertion. Review actual main-branch alerts and analysis source/categories, and keep403/404/no-analysis states distinct. No blanket query/path exclusions or alert suppression is introduced. CI scanning does not authorize real-device access, production signing material, external services or an expanded application trust boundary.
