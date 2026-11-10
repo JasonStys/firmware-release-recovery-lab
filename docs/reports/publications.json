@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "project": "firmware-release-recovery-lab",
+  "author": "Jason Stys",
+  "editionDate": "2026-11-09",
+  "sourceBaseline": "8a89d6fc27a9f283bc26395a91691975daf92c95",
+  "sourceUrl": "https://github.com/JasonStys/firmware-release-recovery-lab/tree/8a89d6fc27a9f283bc26395a91691975daf92c95",
+  "functionalEvidenceBaseline": "8a89d6fc27a9f283bc26395a91691975daf92c95",
+  "evidenceObservedAt": "2026-11-10T06:12:50.203249+00:00",
+  "workflowEvidence": [
+    {
+      "conclusion": "success",
+      "databaseId": 42766219237,
+      "event": "push",
+      "headSha": "8a89d6fc27a9f283bc26395a91691975daf92c95",
+      "name": "CI",
+      "status": "completed",
+      "url": "https://github.com/JasonStys/firmware-release-recovery-lab/actions/runs/42766219237"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42766219193,
+      "event": "push",
+      "headSha": "8a89d6fc27a9f283bc26395a91691975daf92c95",
+      "name": "Dependency security",
+      "status": "completed",
+      "url": "https://github.com/JasonStys/firmware-release-recovery-lab/actions/runs/42766219193"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42766219300,
+      "event": "push",
+      "headSha": "8a89d6fc27a9f283bc26395a91691975daf92c95",
+      "name": "CodeQL",
+      "status": "completed",
+      "url": "https://github.com/JasonStys/firmware-release-recovery-lab/actions/runs/42766219300"
+    }
+  ],
+  "summary": "Rehearse bounded fleet cohorts with package/state fingerprints, compatibility and trial outcomes; fix unconfirmed-stage overwrite, attempt-budget reset and rollback-version checks.",
+  "rationale": "Shows rollout readiness and recovery consequences before touching devices, while enforcing the underlying lifecycle invariants.",
+  "limitations": [
+    "Directory-only simulation with a public demo key, not real hardware secure boot or an operational rollout.",
+    "Trial outcomes are supplied assumptions, not measured or predicted device health.",
+    "The OS/operator is trusted; external concurrent writers are not locked by the rehearsal workflow."
+  ],
+  "documents": [
+    {
+      "filename": "project-guide.docx",
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "bytes": 43667,
+      "sha256": "6a65c614f7c8b5478f7789689ba69f4eb5923d4dc7ab9d75c340e63896b11f04",
+      "sourceBaseline": "8a89d6fc27a9f283bc26395a91691975daf92c95",
+      "visualReview": {
+        "approved": true,
+        "method": "Every rendered page individually viewed at readable original resolution",
+        "pageCount": 5,
+        "renderedPageSha256": {
+          "page-1.png": "5f089da992b208a262f8136506d7c5380244fe25f523afd6517e69a0dd7c8a01",
+          "page-2.png": "5d5adb124d58f923c6ede1afde4e7ae77cdfb403d6f51a2966bcba212790c66e",
+          "page-3.png": "3f65da0b7d932cd355ba042d8954d860677c75a614d49b6e73113353fbc290b7",
+          "page-4.png": "c1b1a63ad2f9073fef9e4cd44087c46b3fc36e629b828a8d72269fe0c85be626",
+          "page-5.png": "8172b393282f43c58a18f2c3a663beb10225d1e41f82126f5ad08eceb1b3865e"
+        }
+      }
+    },
+    {
+      "filename": "validation-review.docx",
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "bytes": 43572,
+      "sha256": "e8629f39875b97f81ccdaa2b487903f85b9c49596d30b7bfaa084d84fba0a0f3",
+      "sourceBaseline": "8a89d6fc27a9f283bc26395a91691975daf92c95",
+      "visualReview": {
+        "approved": true,
+        "method": "Every rendered page individually viewed at readable original resolution",
+        "pageCount": 4,
+        "renderedPageSha256": {
+          "page-1.png": "17b812d50dca1c1976779de0c2559a423868810b3eb2d4e7b604a78b058d873c",
+          "page-2.png": "81ca944774a46489c88c0205056fee77b9dc489d1cefe0becfcf577260112200",
+          "page-3.png": "41284ba10080a9e73aa6287172da058027510db2ac17d61bf9a9c1e947693743",
+          "page-4.png": "a27ad121cd71f866a6df2c9706abfa83963650d91c6ccd5162a84c67adb04e9e"
+        }
+      }
+    },
+    {
+      "filename": "validation-evidence.xlsx",
+      "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "bytes": 7273,
+      "sha256": "b2cc7299ae0f5c440566c0c9a48db75f561da7ce9a6b2e369d2ce6f25169de31",
+      "sourceBaseline": "8a89d6fc27a9f283bc26395a91691975daf92c95",
+      "visualReview": {
+        "approved": true,
+        "tabsReviewed": [
+          "Workflow evidence",
+          "Test sources"
+        ],
+        "previewSha256": {
+          "workflow-evidence.png": "d2e619ef4e32bc386135e39e8bd00724cf1a1906ac2262d9c027684e61d043ba",
+          "test-sources.png": "a3ccad869ec8f4b095017d85f395e0ecdd10cfe7b40c128bc94ea1ebe9ea0a33"
+        },
+        "tables": [
+          {
+            "name": "WorkflowEvidence",
+            "range": "A7:D10",
+            "autoFilter": true
+          },
+          {
+            "name": "TestSources",
+            "range": "A7:C10",
+            "autoFilter": true
+          }
+        ],
+        "formulaCount": 4,
+        "failureSensitivityReceiptPassed": true,
+        "formulaErrors": 0
+      }
+    }
+  ],
+  "scope": "Reviewed documentation editions of the cited source. Checksums identify bytes, not authorship. Historical measurements retain their own dates; integration CI must be checked separately."
+}
