@@ -60,3 +60,14 @@ Every authored or generated repository file has one primary responsibility.
 - `.github/workflows/codeql.yml`: pinned, least-privilege supported-language extraction, security-extended queries and actual SARIF upload.
 - `docs/codeql-analysis.md`: diagnosed coverage gap, language/build modes, trigger/permission contract and exact-source findings review.
 - `docs/reports/codeql-setup-2026-11-09.md`: point-in-time local validation and explicit hosted-analysis limits.
+
+## Reviewed documentation editions
+
+| File | Responsibility |
+| --- | --- |
+| `docs/handbook.md` | Organized entry point for current usage, architecture, safety and validation documentation. |
+| `docs/reports/project-guide.docx` | Every-page-reviewed Word guide to the cited source, operation and explicit boundaries. |
+| `docs/reports/validation-review.docx` | Every-page-reviewed Word validation edition with exact source and analysis observations. |
+| `docs/reports/validation-evidence.xlsx` | Reviewed Excel workflow and test-source Tables, filters and recalculated summaries. |
+| `docs/reports/publications.json` | Exact Office byte digests, visual approval scopes and immutable source/evidence identities. |
+| `docs/reports/documentation-refresh-2026-11-09.md` | Dated documentation integration checks and interpretation limits. |
