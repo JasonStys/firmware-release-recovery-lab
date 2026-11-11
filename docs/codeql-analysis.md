@@ -10,8 +10,9 @@ The authenticated current-main findings/analyses API previously returned HTTP404
 
 | Language lane | Extraction and actual scope |
 | --- | --- |
-| `rust` / none | Pinned Rust1.90 and `cargo fetch --locked` provide the reviewed Cargo graph. CodeQL uses rust-analyzer to process build scripts/macros and authored Rust, without pretending to trace a full Cargo build. The existing CI still compiles and tests all targets/features independently. |
-| `python` / none | Authored repository-validation and generated-index tooling under `scripts/`; no synthetic Rust scan is claimed. |
+| `rust` / none | Pinned Rust1.98.1 and `cargo fetch --locked` provide the reviewed Cargo graph. CodeQL uses rust-analyzer to process build scripts/macros and authored Rust, without pretending to trace a full Cargo build. The existing CI still compiles and tests all targets/features independently. |
+| `python` / none | Actual `firmware_studio` owner, profile, service, subprocess/resource boundary, packaging/acceptance tools and repository scripts. |
+| `javascript-typescript` / none | Authored browser editor, input/model code, native browser acceptance and local asset build scripts. |
 | `actions` / none | Repository workflow YAML and expression/security patterns. |
 
 

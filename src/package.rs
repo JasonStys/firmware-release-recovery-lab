@@ -15,6 +15,7 @@ use crate::{
 
 /// Canonical fields covered by the Ed25519 signature.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ManifestPayload {
     /// Schema version for forward-compatible parsing.
     pub schema_version: u16,
@@ -82,6 +83,7 @@ impl ManifestPayload {
 
 /// A manifest payload plus its detached hexadecimal Ed25519 signature.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct SignedManifest {
     /// Signed release fields.
     pub payload: ManifestPayload,

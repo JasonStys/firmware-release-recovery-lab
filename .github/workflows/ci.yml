@@ -19,14 +19,18 @@ env:
 jobs:
   quality:
     name: Format, lint, test, and document
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Install the application source parser
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with: { python-version: "3.14.10", check-latest: true }
+
       - name: Install pinned Rust toolchain
-        run: rustup toolchain install 1.90.0 --profile minimal --component clippy,rustfmt
+        run: rustup toolchain install 1.98.1 --profile minimal --component clippy,rustfmt
 
       - name: Cache Cargo artifacts
         uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
@@ -52,18 +56,19 @@ jobs:
       - name: Verify generated code index
         run: |
           python scripts/generate_code_index.py
-          git diff --exit-code -- docs/code-index.md
+          python scripts/generate_file_guide.py
+          git diff --exit-code -- docs/code-index.md docs/source-file-guide.md
 
   recovery-campaign:
     name: 1,200 interruption scenarios
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install pinned Rust toolchain
-        run: rustup toolchain install 1.90.0 --profile minimal
+        run: rustup toolchain install 1.98.1 --profile minimal
 
       - name: Cache Cargo artifacts
         uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
@@ -78,3 +83,42 @@ jobs:
           path: artifacts/fault-campaign.json
           if-no-files-found: error
           retention-days: 30
+
+  native-source:
+    name: Native source / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with: { python-version: "3.14.10", check-latest: true }
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with: { node-version: "24", package-manager-cache: false }
+      - run: python -m pip install --require-hashes -r requirements-dev.lock -r requirements-package.lock
+      - run: cargo build --locked
+      - run: npm --prefix web ci --ignore-scripts
+      - run: npm --prefix web run build
+      - name: TypeScript input/unit and exact asset gates
+        if: runner.os == 'Linux'
+        run: |
+          npm --prefix web test
+          npm --prefix web run smoke
+          npm --prefix web audit --audit-level=high
+      - run: python -m ruff check firmware_studio tests tools scripts launcher.py
+      - run: python -m ruff format --check firmware_studio tests tools scripts launcher.py
+      - run: python -m pip_audit --require-hashes -r requirements-dev.lock -r requirements-package.lock
+      - name: Actual source owner, engine, SQLite, HTTP and isolated notice tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            command -v xvfb-run
+            xvfb-run -a python -m pytest --cov --cov-report=term-missing
+          else
+            python -m pytest --cov --cov-report=term-missing
+          fi

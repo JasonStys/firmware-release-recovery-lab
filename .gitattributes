@@ -1,2 +1,5 @@
+# File: Preserve verbatim upstream notice bytes across Windows and POSIX checkouts.
+# Purpose: Exact-source license digests must not change through automatic line conversion.
 *.docx binary
 *.xlsx binary
+/licenses/** -text

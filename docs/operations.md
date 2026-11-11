@@ -2,8 +2,11 @@
 
 ## Configuration
 
-The CLI accepts all state through flags. There are no environment secrets or configuration
-files. A simulated device root contains:
+The [native application guide](native-application.md) covers workspace admission, custom editor,
+local history, supported imports/exports and normal Exit. The following flags and device-directory
+layout describe the original CLI, which remains available separately from that application.
+
+The CLI accepts all state through flags. It requires no environment secrets. A simulated device root contains:
 
 ```text
 device/

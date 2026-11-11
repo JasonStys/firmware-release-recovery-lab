@@ -3,6 +3,7 @@
 //! File map: `Cli` and `Command` define arguments; `run` dispatches commands;
 //! `print_state` provides human and JSON audit output. See `docs/code-index.md`.
 
+use std::io::Read;
 use std::{fs, path::PathBuf, process::ExitCode};
 
 use anyhow::{Context, Result};
@@ -24,6 +25,12 @@ struct Cli {
 /// Supported lifecycle, packaging, inspection, and test operations.
 #[derive(Debug, Subcommand)]
 enum Command {
+    /// Run the bounded offline desktop protocol; no device paths or host commands are accepted.
+    Studio {
+        /// Source identity or one closed JSON rehearsal request.
+        #[command(subcommand)]
+        command: StudioCommand,
+    },
     /// Initialize a synthetic device with a confirmed slot-A image.
     Init {
         /// Directory that represents the simulated device.
@@ -134,6 +141,15 @@ enum Command {
     },
 }
 
+/// Machine-readable source identity and actual-engine rehearsal commands for the desktop owner.
+#[derive(Debug, Subcommand)]
+enum StudioCommand {
+    /// Print product/version/full reviewed source commit without modifying state.
+    Version,
+    /// Read one ordinary request file (maximum256KiB), execute a fresh owned simulation and print JSON.
+    Execute { input: PathBuf },
+}
+
 /// Parses the CLI, reports errors without panicking, and returns a process status.
 fn main() -> ExitCode {
     match run(Cli::parse()) {
@@ -150,6 +166,25 @@ fn main() -> ExitCode {
 #[allow(clippy::too_many_lines)]
 fn run(cli: Cli) -> Result<()> {
     match cli.command {
+        Command::Studio { command } => match command {
+            StudioCommand::Version => println!(
+                "{}",
+                serde_json::json!({
+                    "schemaVersion": 1, "name": env!("CARGO_PKG_NAME"),
+                    "version": env!("CARGO_PKG_VERSION"),
+                    "sourceCommit": option_env!("PORTFOLIO_SOURCE_SHA").unwrap_or("development"),
+                })
+            ),
+            StudioCommand::Execute { input } => {
+                let file = fs::File::open(input)?;
+                anyhow::ensure!(file.metadata()?.is_file(), "ordinary request file required");
+                let mut bytes = Vec::new();
+                file.take(262_145).read_to_end(&mut bytes)?;
+                anyhow::ensure!(bytes.len() <= 262_144, "desktop request exceeds256KiB");
+                let result = firmware_recovery::studio::execute(std::str::from_utf8(&bytes)?)?;
+                println!("{}", serde_json::to_string(&result)?);
+            }
+        },
         Command::Init {
             root,
             version,

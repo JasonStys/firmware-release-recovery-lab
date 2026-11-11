@@ -1,0 +1,47 @@
+# File: Uses the real portable Rust/TypeScript/Python application; no releases or binary uploads.
+name: Desktop application validation
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: desktop-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  portable:
+    name: Real firmware rehearsal application / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with: { python-version: "3.14.10", check-latest: true }
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with: { node-version: "24", package-manager-cache: false }
+      - run: python -m pip install --require-hashes -r requirements-dev.lock -r requirements-package.lock
+      - run: npm --prefix web ci --ignore-scripts
+      - run: npm --prefix web run build
+      - name: Install the exact locked browser
+        timeout-minutes: 5
+        run: npm --prefix web exec -- playwright install chromium
+      - name: Verify actual locked Chromium host requirements
+        timeout-minutes: 2
+        run: npm --prefix web run check:browser-host
+      - name: Build archive, safely extract and use the actual application
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            command -v xvfb-run
+            xvfb-run -a python -m tools.package_app --output-root .runtime/native-ci
+          else
+            python -m tools.package_app --output-root .runtime/native-ci
+          fi

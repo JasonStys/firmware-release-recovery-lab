@@ -25,6 +25,12 @@ user and operating system are trusted for this educational model.
 | Interrupted metadata commit | Synchronized temporary file and valid prior copy | Boundary campaign |
 | Invalid recovered state | Parse plus invariant validation before selection | Store tests |
 | Workflow dependency drift | Immutable action SHAs and Dependabot proposals | Workflow review |
+| Cross-origin local API calls or a forged listener | Prebound loopback socket, exact authority/Origin and per-instance capability | Actual HTTP negative and native restart tests |
+| Unsafe private-directory initialization | Existing-ancestor/reparse/program-root admission; ordinary single-link fixed members and opened identity | Actual junction/hardlink/frozen-root sentinel tests |
+| Imported report presented as measured evidence | Discard supplied report and rerun its closed structured input through fixed Rust executable | Actual forged-report browser import oracle |
+| Malformed/unbounded input or child response | Explicit body/nesting/device/image/step/output/deadline limits; refusal before saving | Parser/framing/engine negatives and independent domain checks |
+| Workspace released while work continues | Actual handler completion and owned child shutdown before lock release | Held-request/repeated-close/second-owner tests |
+| Mismatched native resources or omitted notices | Exact source/runtime/engine/UI digests plus actual Rust/Cargo/runtime notice inventories | Safe archive extraction and full compiled consumer |
 
 ## Not addressed
 

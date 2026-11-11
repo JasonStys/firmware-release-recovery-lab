@@ -4,16 +4,49 @@
 [![CodeQL](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/codeql.yml/badge.svg)](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/codeql.yml)
 [![Dependency security](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/security.yml/badge.svg)](https://github.com/JasonStys/firmware-release-recovery-lab/actions/workflows/security.yml)
 
-A safe, deterministic Rust simulator for reasoning about signed A/B firmware updates,
+A local desktop application and deterministic Rust simulator for reasoning about signed A/B firmware updates,
 bounded trial boots, health confirmation, rollback, and interrupted durable writes. It
 operates only on local directories and synthetic byte strings: it does not flash devices,
 implement secure boot, download firmware, or access hardware.
 
-The [CodeQL analysis contract](docs/codeql-analysis.md) covers the actual Rust simulator, Python repository tools and Actions with security-extended queries. Rust uses its officially supported no-build extraction, alongside the existing real Cargo build/tests and RustSec audit. Missing analysis is never treated as zero findings.
+The application lets a user edit fictional device inventories, build or import supported signed packages,
+rehearse ordered lifecycle steps and metadata interruptions, compare actual before/after states,
+review cohort readiness, and save or export the evidence. The Python owner window supplies a private
+local workspace and opens the TypeScript interface in a browser. Every run invokes the original
+compiled Rust engine; imported report claims are discarded and their input is executed again.
+
+The [CodeQL analysis contract](docs/codeql-analysis.md) covers Rust, Python, TypeScript/JavaScript and
+Actions with security-extended queries. Rust uses its supported no-build extraction alongside real
+Cargo builds, tests and RustSec audit. Missing analysis is never treated as zero findings.
+
+## Desktop application
+
+The **0.2.0 source candidate** adds the full application. A downloadable release is pending review;
+this README does not represent a local build as a published or signed installer. The native build
+produces a Windows ZIP or a macOS/Linux tar.gz portable application, with hashes and exact source
+provenance. Extract the complete archive into a new application directory before launching
+`FirmwareRecoveryWorkbench.exe` on Windows or `FirmwareRecoveryWorkbench` on macOS/Linux.
+
+1. Open the application, choose an empty or existing identified workspace, and select **Open workspace**.
+2. Edit the device JSON, image bytes, release policy and ordered steps, or import your supported JSON/image files.
+3. Run the rehearsal and inspect each actual generation, slot decision, rejection or interruption.
+4. Export the selected input, signed demonstration package or evidence. Reopen the same workspace to review its history.
+
+Healthy promotion, exhausted-trial rollback, interrupted metadata, fleet/cohort review and the
+original campaign are editable options within the same application. They do not limit users to
+fixed example cases. Malformed input is refused before a history record is created; an actual
+blocked or interrupted rehearsal remains visible as evidence of that outcome.
+
+The native window stays responsible for its loopback service and workspace lock until owned work
+finishes. Use **Exit** or the browser's **Quit application** control; closing the browser tab alone
+does not stop the app. There are no accounts, remote telemetry or cloud services. Workspace data
+is ordinary local SQLite, protected by OS-user access rather than encryption from the PC owner.
+See the [application guide](docs/native-application.md), [test evidence](docs/reports/native-application-2026-11-11.md)
+and [native architecture decision](docs/adr-native-rehearsal-studio.md).
 
 ## 60-second quickstart
 
-Prerequisites: Rust 1.90.0 (the toolchain file selects it) and Git.
+Prerequisites for the original CLI: Rust 1.98.1 (the toolchain file selects it) and Git.
 
 ```bash
 cargo run -- init --root demo/device --version 1.0.0
@@ -67,6 +100,9 @@ production bootloader or hardware-security expertise.
 | Auditability           | Monotonic generations and bounded causal event history persisted with each transition                              |
 | CLI                    | Human-readable status plus JSON output for automation and evidence capture                                         |
 | Verification           | Unit, integration, property, tamper, recovery, Clippy, rustfmt, docs, and dependency-advisory gates                |
+| Editable desktop studio | Custom devices, image import, signed-package inspection, ordered steps and six named metadata interruptions |
+| Durable local history | Literal title/type search, paging, selected input/evidence/package exports and explicit record deletion |
+| Owned native lifecycle | Patched Python runtime, private capability-bound loopback UI, single-owner workspace and completion-based Exit |
 
 ## Architecture
 
@@ -152,7 +188,8 @@ See [SECURITY.md](SECURITY.md), [threat model](docs/threat-model.md), and
 | `docs/`             | Architecture, decisions, safety analysis, operations, tests, and evidence        |
 | `.github/`          | Read-only CI/security workflows and dependency maintenance                       |
 
-Every authored file is summarized in [the repository map](docs/repository-map.md), and exact
+Every original file is summarized in [the repository map](docs/repository-map.md), every code file
+in the generated [source file guide](docs/source-file-guide.md), and exact
 function/type locations are generated in [the code index](docs/code-index.md).
 
 ## Complexity and performance
@@ -177,6 +214,24 @@ cargo doc --no-deps --document-private-items --locked
 python scripts/verify_repo.py
 ```
 
+For the application use Python 3.14.10 or later final 3.14, Node 24 and the pinned Rust toolchain:
+
+```bash
+python -m pip install --require-hashes -r requirements-dev.lock -r requirements-package.lock
+cargo build --locked
+npm --prefix web ci --ignore-scripts
+npm --prefix web test
+npm --prefix web run smoke
+python -m pytest --cov --cov-report=term-missing
+python launcher.py
+```
+
+`python -m tools.package_app --output-root .runtime/native-build` requires a clean source checkout,
+builds the actual engine/UI, collects runtime and target-resolved crate notices, safely extracts the
+archive and runs the actual compiled GUI workflows plus a second-launch history check. It refuses
+to overwrite existing output. Linux GUI tests require an actual display or `xvfb-run`; browser
+acceptance also requires the locked Chromium installation. See [testing](docs/testing.md).
+
 Contributions follow [CONTRIBUTING.md](CONTRIBUTING.md). Design choices are captured as ADRs,
 starting with [Rust for the state engine](docs/adr/0001-rust-state-engine.md) and
 [recoverable JSON metadata](docs/adr/0002-recoverable-json-metadata.md).
@@ -186,7 +241,9 @@ hosted verification and dependency review.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+Authored source is MIT; see [LICENSE](LICENSE). Portable packages also contain actual Python,
+Tcl/Tk, PyInstaller, Rust standard-library and resolved Cargo dependency notices. Their separate
+terms and source identities are retained; this is not a claim that every bundled component is MIT.
 
 ## Documentation editions
 

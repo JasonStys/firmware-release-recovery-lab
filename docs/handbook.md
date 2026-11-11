@@ -24,6 +24,7 @@ The editable Markdown remains the maintenance source. The Word files are readabl
 
 ### Usage and operations
 
+- [native application: workspace, custom inputs, review, history and exports](native-application.md)
 - [fleet preflight](fleet-preflight.md)
 - [operations](operations.md)
 - [release checklist](release-checklist.md)
@@ -39,6 +40,12 @@ The editable Markdown remains the maintenance source. The Word files are readabl
 ### Security and validation
 
 - [testing](testing.md)
+- [native application implementation observations](reports/native-application-2026-11-11.md)
+- [source file responsibilities](source-file-guide.md)
+
+The existing Word/workbook editions below retain their historical source and date. The newer
+Markdown application guide and dated validation report describe the 0.2.0 candidate; a new reviewed
+Office edition or published application must retain its own exact source/byte acceptance.
 
 ## Historical results and reproduction
 
