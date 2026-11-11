@@ -131,7 +131,7 @@ def test_exit_without_start_does_not_create_a_workspace(window, tmp_path):
 
 
 def test_real_minimum_window_keeps_open_help_exit_controls_visible(window):
-    assert window.root.title() == "Firmware Release Recovery Workbench | Jason Stys | 0.2.0"
+    assert window.root.title() == "Firmware Release Recovery Workbench | Jason Stys | 0.2.1"
     window.root.deiconify()
     window.root.geometry("560x350")
     window.root.update()

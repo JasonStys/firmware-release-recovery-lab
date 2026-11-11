@@ -1790,9 +1790,26 @@ they are navigation aids, not unused-code or whole-program analysis.
 | 230 | `const` | `rerunResponse` |
 | 239 | `const` | `response` |
 | 241 | `const` | `rerun` |
-| 260 | `const` | `mobileLayouts` |
-| 263 | `const` | `layout` |
-| 264 | `const` | `identity` |
+| 265 | `const` | `original` |
+| 278 | `const` | `authority` |
+| 279 | `let` | `releaseResponse` |
+| 280 | `const` | `responseGate` |
+| 283 | `let` | `markRealResponse` |
+| 284 | `let` | `rejectRealResponse` |
+| 285 | `const` | `realResponseReady` |
+| 289 | `let` | `racingRecord` |
+| 290 | `let` | `routeStarted` |
+| 291 | `let` | `routeFailure` |
+| 292 | `let` | `markRouteDone` |
+| 293 | `const` | `routeDone` |
+| 299 | `const` | `actual` |
+| 326 | `const` | `importOutcome` |
+| 327 | `const` | `status` |
+| 337 | `const` | `disposition` |
+| 368 | `const` | `removal` |
+| 383 | `const` | `mobileLayouts` |
+| 386 | `const` | `layout` |
+| 387 | `const` | `identity` |
 
 ## `tools/package_app.py`
 
@@ -2237,19 +2254,19 @@ they are navigation aids, not unused-code or whole-program analysis.
 | 302 | `const` | `expected` |
 | 321 | `function` | `setBusy` |
 | 333 | `function` | `run` |
-| 335 | `const` | `captured` |
-| 339 | `const` | `result` |
-| 380 | `const` | `current` |
-| 381 | `const` | `kind` |
-| 382 | `const` | `action` |
-| 434 | `const` | `id` |
-| 459 | `const` | `file` |
-| 461 | `const` | `captured` |
-| 466 | `const` | `data` |
-| 472 | `const` | `parsed` |
-| 494 | `const` | `value` |
-| 519 | `function` | `inputOrSelect` |
-| 520 | `const` | `value` |
+| 338 | `const` | `captured` |
+| 342 | `const` | `result` |
+| 383 | `const` | `current` |
+| 384 | `const` | `kind` |
+| 385 | `const` | `action` |
+| 437 | `const` | `id` |
+| 462 | `const` | `file` |
+| 464 | `const` | `captured` |
+| 469 | `const` | `data` |
+| 475 | `const` | `parsed` |
+| 497 | `const` | `value` |
+| 522 | `function` | `inputOrSelect` |
+| 523 | `const` | `value` |
 
 ## `web/src/model.ts`
 

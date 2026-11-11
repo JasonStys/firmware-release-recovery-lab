@@ -51,7 +51,7 @@ def main():
                         "passed": True,
                         "mode": "explicit source-only application harness",
                         "normalExit": 0,
-                        "version": "0.2.0",
+                        "version": "0.2.1",
                         "browser": "actual Chromium",
                         "limits": "No compiled package, installer or release acceptance is claimed",
                     },

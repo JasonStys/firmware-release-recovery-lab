@@ -52,6 +52,11 @@ nesting and malformed framing fail before a run is saved. File imports are parse
 validated semantically; the input hash describes canonical submitted protocol bytes rather than
 the original file's whitespace. Binary image import is separate from JSON documentation import.
 
+If an evidence file finishes loading while another rehearsal is still running, version 0.2.1
+reports that the loaded input has not been run. Wait for completion, then choose **Run** explicitly.
+The active rehearsal retains its actual saved evidence; an imported result is never treated as
+fresh engine output. This corrects a misleading success message in the unpublished 0.2.0 candidate.
+
 ## Review fleet cohorts and interruption campaigns
 
 Fleet review uses custom devices, the same release and a cohort size of1–16. It evaluates the

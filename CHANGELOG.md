@@ -5,6 +5,16 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### 0.2.1 asynchronous evidence-import correction
+
+- Refuse an evidence-file rerun explicitly when another rehearsal is still active, instead of
+  silently returning and claiming that the imported input ran.
+- Exercise the actual selected file bytes and completed Rust/API response with independently
+  controlled delivery; preserve the seven original rehearsal/export/restart oracles.
+- Keep the workspace schema, Rust decisions, ownership, shutdown and patched Python floor unchanged.
+  The 0.2.0 unpublished candidate and its earlier evidence remain historical; publication and
+  installed same-workspace upgrade acceptance are separate from this source change.
+
 ### 0.2.0 application candidate
 
 - Genuine offline desktop owner, editable TypeScript rehearsal interface and durable local evidence history.

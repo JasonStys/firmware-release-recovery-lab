@@ -55,7 +55,7 @@ class Window:
         from tkinter import filedialog, ttk
 
         self.root = tk.Tk()
-        self.root.title("Firmware Release Recovery Workbench | Jason Stys | 0.2.0")
+        self.root.title("Firmware Release Recovery Workbench | Jason Stys | 0.2.1")
         self.root.geometry("680x390")
         self.root.minsize(560, 350)
         self.root.protocol("WM_DELETE_WINDOW", self.quit)

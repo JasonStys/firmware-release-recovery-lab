@@ -22,6 +22,13 @@ partially committed metadata.
 | Browser workflows | Actual editable UI/import/review/download/history | Independent generation/cohort/campaign oracles; mobile/keyboard; selected evidence preserved on refusal |
 | Portable packaging | Actual extracted application and second launch | Exact source/runtime/assets/notices, seven recorded workflows, normal 0/0 and retained history |
 
+The 0.2.1 browser consumer also pauses a real selected evidence file read and the delivery of an
+actual completed Rust/API response independently. It requires an explicit busy refusal instead of
+a rerun claim, releases the unchanged response, then explicitly deletes only that temporary eighth
+run. The original seven retained-workflow, exact-download and second-launch oracles still apply.
+The [dated correction record](reports/async-evidence-import-2026-11-11.md) distinguishes the actual
+installed 0.2.0 reproduction from later source/package and hosted checks.
+
 ## Determinism
 
 Transition functions use no clock, randomness, network, or global state. Audit sequence values

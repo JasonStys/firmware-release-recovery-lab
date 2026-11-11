@@ -63,7 +63,7 @@ async function run() {
   await check("#selected", evidence.id);
   assert.deepEqual(await downloaded("#export-evidence"), evidence);
   assert.equal(evidence.engine.sourceCommit, expectedSource);
-  assert.equal(evidence.version, "0.2.0");
+  assert.equal(evidence.version, "0.2.1");
   created.push({
     id: evidence.id,
     kind: evidence.input.kind,
@@ -256,6 +256,129 @@ try {
   await check("#selected", healthy.id);
   assert.deepEqual(await downloaded("#export-evidence"), healthy);
   assert.equal((await api("/api/history")).total, 7);
+  // Keep actual selected bytes and the completed Rust/API answer; delay delivery only.
+  await loadExample(
+    "healthy",
+    "Actual active rehearsal during pending evidence import",
+  );
+  await page.evaluate(() => {
+    const original = File.prototype.arrayBuffer;
+    globalThis.restoreEvidenceRead = () => {
+      File.prototype.arrayBuffer = original;
+    };
+    File.prototype.arrayBuffer = function () {
+      if (this.name !== "pending-firmware-evidence.json")
+        return original.call(this);
+      return new Promise((resolve, reject) => {
+        globalThis.releaseEvidenceRead = () =>
+          original.call(this).then(resolve, reject);
+      });
+    };
+  });
+  const authority = new URL(url).origin;
+  let releaseResponse;
+  const responseGate = new Promise((resolve) => {
+    releaseResponse = resolve;
+  });
+  let markRealResponse;
+  let rejectRealResponse;
+  const realResponseReady = new Promise((resolve, reject) => {
+    markRealResponse = resolve;
+    rejectRealResponse = reject;
+  });
+  let racingRecord;
+  let routeStarted = false;
+  let routeFailure;
+  let markRouteDone;
+  const routeDone = new Promise((resolve) => {
+    markRouteDone = resolve;
+  });
+  await page.route(authority + "/api/run", async (route) => {
+    routeStarted = true;
+    try {
+      const actual = await route.fetch();
+      assert.equal(actual.status(), 201);
+      racingRecord = await actual.json();
+      markRealResponse();
+      await responseGate;
+      await route.fulfill({ response: actual });
+    } catch (error) {
+      routeFailure = error;
+      rejectRealResponse(error);
+    } finally {
+      markRouteDone();
+    }
+  });
+  try {
+    await page.locator("#evidence-file").setInputFiles({
+      name: "pending-firmware-evidence.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(healthy)),
+    });
+    await page.waitForFunction(
+      () => typeof globalThis.releaseEvidenceRead === "function",
+    );
+    await page.locator("#run").click();
+    await realResponseReady;
+    await page.evaluate(() => {
+      globalThis.releaseEvidenceRead();
+    });
+    const importOutcome = await page.waitForFunction(() => {
+      const status = document.querySelector("#status");
+      if (
+        status?.classList.contains("error") &&
+        status.textContent.includes("loaded input has not been run")
+      )
+        return { refused: true, message: status.textContent };
+      if (status?.textContent.includes("Imported input was rerun"))
+        return { refused: false, message: status.textContent };
+      return false;
+    });
+    const disposition = await importOutcome.jsonValue();
+    await writeFile(
+      resolve(output, "async-import-disposition.json"),
+      JSON.stringify(disposition, null, 2) + "\n",
+    );
+    assert.equal(
+      disposition.refused,
+      true,
+      "A pending imported input cannot claim a rerun while the actual operation is still busy",
+    );
+    assert.equal(await page.locator("#run").isDisabled(), true);
+  } finally {
+    releaseResponse();
+    if (routeStarted) await routeDone;
+    await page.unroute(authority + "/api/run");
+    await page.evaluate(() => {
+      globalThis.restoreEvidenceRead();
+    });
+  }
+  assert.equal(routeFailure, undefined);
+  await page.locator("#run:enabled").waitFor();
+  assert.equal(racingRecord.report.status, "completed");
+  assert.equal(racingRecord.engine.sourceCommit, expectedSource);
+  await page.locator("#search").fill("");
+  await page.locator("#refresh").click();
+  await check("#history-total", "8 matching saved rehearsals");
+  await page
+    .locator("#history button")
+    .filter({ hasText: racingRecord.title })
+    .click();
+  await check("#selected", racingRecord.id);
+  const removal = page.waitForResponse(
+    (response) => response.url() === authority + "/api/delete",
+  );
+  page.once("dialog", (dialog) => dialog.accept());
+  await page.locator("#delete").click();
+  assert.equal((await removal).status(), 200);
+  await check("#history-total", "7 matching saved rehearsals");
+  assert.equal((await api("/api/history")).total, 7);
+  await page.locator("#search").fill("%_");
+  await page.locator("#refresh").click();
+  await check("#history-total", "1 matching saved rehearsals");
+  await page.locator("#history button").click();
+  await check("#selected", healthy.id);
+  assert.deepEqual(await downloaded("#export-evidence"), healthy);
   await check("#identity", expectedSource);
   const mobileLayouts = [];
   for (const width of [390, 320]) {
@@ -316,6 +439,10 @@ try {
         },
         negativeInputsPreserved: true,
         importedClaimsRerun: true,
+        asyncEvidenceImportWhileBusyRefused: true,
+        actualApiResponseHeldAndReused: true,
+        actualExecutionCycles: 8,
+        explicitlyDeletedTemporaryRecords: 1,
         mobileOverflow: false,
         mobileLayouts,
         pageErrors: errors,

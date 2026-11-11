@@ -1,7 +1,7 @@
 # File: Defines native-studio metadata and independent Python validation gates.
 [project]
 name = "firmware-release-recovery-lab"
-version = "0.2.0"
+version = "0.2.1"
 requires-python = ">=3.14.10"
 description = "Owned offline release, rollback and recovery application for the original Rust engines"
 [tool.pytest.ini_options]

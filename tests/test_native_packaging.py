@@ -10,7 +10,7 @@ from tools import package_app
 
 
 def test_real_product_configuration_is_coherent():
-    assert package_app.configuration() == "0.2.0"
+    assert package_app.configuration() == "0.2.1"
 
 
 @pytest.mark.parametrize(
@@ -87,7 +87,8 @@ def test_each_current_product_version_surface_is_enforced(tmp_path, name):
         target.write_bytes(source.read_bytes())
     target = tmp_path / name
     target.write_text(
-        target.read_text(encoding="utf-8").replace("0.2.0", "1.0.0"), encoding="utf-8"
+        target.read_text(encoding="utf-8").replace(package_app.configuration(), "1.0.0"),
+        encoding="utf-8",
     )
     with pytest.raises(ValueError):
         package_app.configuration(tmp_path)

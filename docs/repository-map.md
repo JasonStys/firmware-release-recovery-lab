@@ -20,6 +20,8 @@ Every authored or generated repository file has one primary responsibility.
 | `rustfmt.toml` | Normalizes Rust formatting and newlines |
 | `docs/architecture.md` | Describes components, data flow, trust boundaries, and failure behavior |
 | `docs/code-index.md` | Generated exact line locations for source declarations |
+| `docs/releases/v0.2.1.md` | Narrow asynchronous evidence-import release scope and unchanged-workspace limits |
+| `docs/reports/async-evidence-import-2026-11-11.md` | Actual old-candidate defect reproduction and new guard/regression validation |
 | `docs/durable-writes.md` | Documents state commit ordering and durability limitations |
 | `docs/limitations.md` | Lists deliberate exclusions and non-production constraints |
 | `docs/operations.md` | Documents configuration, inspection, recovery, and troubleshooting |
