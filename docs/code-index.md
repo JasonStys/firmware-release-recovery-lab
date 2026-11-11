@@ -376,13 +376,13 @@ they are navigation aids, not unused-code or whole-program analysis.
 | 56 | `variable` | `line_number` |
 | 57 | `variable` | `match` |
 | 63 | `function` | `main` |
-| 65 | `variable` | `lines` |
-| 75 | `variable` | `path` |
-| 76 | `variable` | `relative` |
-| 78 | `variable` | `entries` |
-| 80 | `variable` | `kind` |
-| 80 | `variable` | `line` |
-| 80 | `variable` | `name` |
+| 71 | `variable` | `lines` |
+| 81 | `variable` | `path` |
+| 82 | `variable` | `relative` |
+| 84 | `variable` | `entries` |
+| 86 | `variable` | `kind` |
+| 86 | `variable` | `line` |
+| 86 | `variable` | `name` |
 
 ## `scripts/generate_file_guide.py`
 
@@ -1294,6 +1294,12 @@ they are navigation aids, not unused-code or whole-program analysis.
 | 72 | `parameter` | `repository` |
 | 74 | `variable` | `python` |
 | 86 | `variable` | `browser` |
+| 96 | `function` | `test_old_interpreter_refuses_before_any_generated_file_write` |
+| 96 | `parameter` | `monkeypatch` |
+| 96 | `parameter` | `tmp_path` |
+| 98 | `variable` | `sentinel` |
+| 101 | `variable` | `parse` |
+| 102 | `parameter` | `source` |
 
 ## `tests/test_runtime_notices.py`
 

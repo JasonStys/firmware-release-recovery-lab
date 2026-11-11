@@ -91,3 +91,15 @@ def test_python_ast_and_browser_rust_declaration_locations(repository):
     assert python in index.discover_files(repository)
     assert browser in index.discover_files(repository)
     assert repository / ".runtime/private.py" not in index.discover_files(repository)
+
+
+def test_old_interpreter_refuses_before_any_generated_file_write(tmp_path, monkeypatch):
+    """A system Python3.12 parser must not silently index only part of actual3.14 source."""
+    sentinel = tmp_path / "index.md"
+    sentinel.write_text("Preserve previous verified navigation.\n", encoding="utf-8")
+    monkeypatch.setattr(index, "OUTPUT", sentinel)
+    parse = index.ast.parse
+    monkeypatch.setattr(index.ast, "parse", lambda source: parse(source, feature_version=(3, 12)))
+    with pytest.raises(RuntimeError, match="Python 3.14"):
+        index.main()
+    assert sentinel.read_text(encoding="utf-8") == "Preserve previous verified navigation.\n"

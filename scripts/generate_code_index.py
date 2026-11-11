@@ -62,6 +62,12 @@ def declarations(path: Path) -> list[tuple[int, str, str]]:
 
 def main() -> None:
     """Write a deterministic Markdown index containing current declaration locations."""
+    try:
+        ast.parse("try:\n    pass\nexcept ValueError, UnicodeError:\n    pass\n")
+    except SyntaxError as error:
+        raise RuntimeError(
+            "Python 3.14 or later is required to parse the actual application source"
+        ) from error
     lines = [
         "# Code index",
         "",

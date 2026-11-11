@@ -34,7 +34,7 @@ Actual additional defects caught during implementation:
 | Rust unit/integration/property/domain |30 tests:9 library,1 persisted lifecycle,2 property,8 original preflight and10 new studio cases |
 | Original recovery campaign |1,200 scenarios,1,200 recovered/safety checks,400 prior-state and 800 forward recoveries; original oracle unchanged |
 | Strict compiler tooling | rustfmt, all-target/all-feature Clippy with warnings denied, locked tests and private-item Rustdoc |
-| Python application/source/package |160 parent tests plus13 actual Tcl notice cases in a fresh bounded child interpreter; no retries/skips |
+| Python application/source/package |161 parent tests plus13 actual Tcl notice cases in a fresh bounded child interpreter; no retries/skips |
 | Whole application coverage |93.91% combined statement/branch over 646 statements and 208 branches; unchanged 90% floor, owner UI included |
 | TypeScript/model/build |5 actual input/binary/UTF-8/closed-schema tests;4 production assets,39,285 bytes against90,000-byte cap |
 | Source browser |7 saved actual workflows, fresh source owner, real Chromium edits/imports/downloads and normal exit0 |
@@ -55,6 +55,13 @@ normal exits 0/0 and retained history after restart. Its ZIP SHA-256 was
 `58c04e7ca42339bd58dcdec3926ce9a0b25c0d3d6dfa5a8f43ba79c1347efc17`.
 This is a source-bound local portable-package observation, not a published release, independent
 installation or a result from macOS/Linux. Later source/CI review retains its own exact revision.
+
+The first hosted quality job then exposed a workflow tooling mismatch: it used Ubuntu's system
+Python3.12 to AST-parse actual Python3.14 source, while all three native-source jobs used the
+declared patched interpreter and passed. The quality job now explicitly installs Python3.14.10;
+an independent negative test proves the indexer refuses an old parser before overwriting its
+previous output. This preserves the source/index gate rather than excluding newer source.
+The original failed run43047553027 remains evidence; the corrected head needs fresh hosted checks.
 
 ## Independent user journeys and refusal oracles
 
