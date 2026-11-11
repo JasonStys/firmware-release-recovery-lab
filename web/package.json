@@ -10,6 +10,7 @@
     "build": "npm run clean && tsc -p tsconfig.json && node scripts/build.mjs",
     "test": "npm run build && node --test build/tests/*.test.js",
     "smoke": "node scripts/smoke.mjs",
+    "check:browser-host": "node scripts/check_browser_host.mjs chromium",
     "test:browser": "python ../tools/smoke_source.py --output ../.runtime/source-browser"
   },
   "devDependencies": {

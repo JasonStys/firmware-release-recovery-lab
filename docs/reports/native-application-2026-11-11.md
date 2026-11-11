@@ -63,6 +63,22 @@ an independent negative test proves the indexer refuses an old parser before ove
 previous output. This preserves the source/index gate rather than excluding newer source.
 The original failed run43047553027 remains evidence; the corrected head needs fresh hosted checks.
 
+At corrected source `b5080df4d9d052f19dc5f09aa4d318739229e034`, all original CI/source/dependency
+checks and Windows/macOS native consumers passed. Linux native run43049227199 failed in browser
+OS-dependency setup before compiling or testing the application: APT repeatedly reported
+`Temporary failure resolving 'archive.ubuntu.com'` and exited100. The earlier run43047553393
+reported the same setup failure. These logs do not establish the DNS root cause or a product defect.
+They explicitly showed all required Chromium runtime libraries, Xvfb and existing basic fonts
+installed; the nine proposed additions were extra font/X-font packages.
+
+The native job now downloads only the exact locked Chromium and runs an actual mandatory host
+probe before the unchanged full compiled consumer. This reuses the reviewed source-bound approach
+from [the image application's host probe](https://github.com/JasonStys/personal-image-model-studio/blob/6f0a2536dd6e6a9b481a3f74b31388dda74e976c/scripts/check_browser_host.mjs):
+normal browser launch/page input must pass, a missing executable must fail, the installed version
+must match the npm lock and `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` is refused. No host
+validation bypass, browser flag, test assertion, native journey, Xvfb requirement, job deadline or
+application timeout is relaxed. This does not claim coverage of optional writing-system font sets.
+
 ## Independent user journeys and refusal oracles
 
 The real browser enters a custom hardware ID and binary image containing 0,1,127,128,255. A healthy

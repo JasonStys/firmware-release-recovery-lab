@@ -56,6 +56,7 @@ See the [code index](code-index.md) for exact declaration, parameter and variabl
 | [tools/smoke_source.py](../tools/smoke_source.py) | Explicitly exercise the source application with the same actual GUI/domain oracles. |
 | [web/public/index.html](../web/public/index.html) | Genuine offline firmware rehearsal editor, results and saved evidence by Jason Stys. |
 | [web/scripts/build.mjs](../web/scripts/build.mjs) | Compile and copy only the fixed offline application asset inventory by Jason Stys. build output is owned; no runtime dependency or remote resource is included. |
+| [web/scripts/check_browser_host.mjs](../web/scripts/check_browser_host.mjs) | Fail closed on actual locked Chromium host/launch dependencies by Jason Stys. A missing executable must fail; the ordinary launch uses Playwright's default host validation. This probe is separate from the required compiled application journeys. |
 | [web/scripts/clean.mjs](../web/scripts/clean.mjs) | Remove only this compiler's fixed web/build output by Jason Stys. |
 | [web/scripts/smoke.mjs](../web/scripts/smoke.mjs) | Enforce closed asset identity, no remote UI resources and a fixed size budget. Source UI acceptance does not replace real compiled native journeys. |
 | [web/src/app.ts](../web/src/app.ts) | Actual editable release/recovery, evidence selection and durable history UI by Jason Stys. Async operations preserve selected evidence on refusal and ignore stale edit/search responses. Variables are current selection, revision, pagination and one owner capability. |

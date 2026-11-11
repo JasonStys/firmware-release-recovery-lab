@@ -2136,6 +2136,17 @@ they are navigation aids, not unused-code or whole-program analysis.
 | 5 | `const` | `root` |
 | 6 | `const` | `destination` |
 
+## `web/scripts/check_browser_host.mjs`
+
+| Line | Kind | Name |
+| ---: | --- | --- |
+| 12 | `const` | `root` |
+| 15 | `const` | `lock` |
+| 18 | `const` | `installed` |
+| 28 | `const` | `temporary` |
+| 36 | `const` | `browser` |
+| 38 | `const` | `page` |
+
 ## `web/scripts/clean.mjs`
 
 | Line | Kind | Name |
