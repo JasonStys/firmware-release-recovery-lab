@@ -17,6 +17,9 @@ policy from persistence so each can be tested independently.
 | Store | Own internal paths, slot files, primary/backup metadata | Local directory only |
 | Fault injector | Interrupt named metadata commit boundaries once | Simulated process failure, not physical power analysis |
 | Campaign runner | Restart after each interruption and classify recovered state | Temporary directories are deleted automatically |
+| Studio Rust adapter | Validate closed custom requests and reuse actual agent/preflight/campaign APIs | Fresh ordinal device directories; inert payloads |
+| Python owner/service | Admit and lock private workspace, invoke fixed bounded Rust engine, retain evidence | Ephemeral loopback authority, capability and Origin; no accounts/cloud |
+| TypeScript interface | Edit/import real inputs, inspect outcomes, search history and download evidence | Fixed local assets; no arbitrary commands or imported report trust |
 
 ## Data flow
 
@@ -37,9 +40,10 @@ The fixed demo verification key is trusted only for repeatable tests.
 
 ## Deployment model
 
-This is a local command-line simulator. A release build produces one `fwlab` executable plus
-its documentation and test evidence. It has no daemon, database, listening socket, or cloud
-deployment.
+The original `fwlab` CLI remains available. The native application additionally embeds that actual
+Rust executable, a patched Python/Tk owner and four compiled TypeScript/HTML/CSS assets. It owns one
+ephemeral loopback listener and local SQLite history. It has no cloud deployment, account server,
+device connection or persistent background service after normal Exit. See the [application guide](native-application.md).
 
 ## Failure modes
 
@@ -61,4 +65,4 @@ deployment.
 
 ## Static analysis boundary
 
-Rust uses CodeQL build mode none, the supported Rust mode. Its rust-analyzer extractor can compile/run locked build scripts and procedural macros; this is not full executable compilation or a substitute for Cargo/Clippy/fault-campaign evidence. Python scripts and Actions are separate supported source lanes. The analysis job uploads findings but cannot deploy or access user configuration. [CodeQL scope and review](codeql-analysis.md) keeps scanner success, exact-source analysis availability and actual findings distinct.
+Rust uses CodeQL build mode none, the supported Rust mode. Its rust-analyzer extractor can compile/run locked build scripts and procedural macros; this is not full executable compilation or a substitute for Cargo/Clippy/fault-campaign evidence. Python, TypeScript/JavaScript and Actions are separate supported source lanes. The analysis job uploads findings but cannot deploy or access user configuration. [CodeQL scope and review](codeql-analysis.md) keeps scanner success, exact-source analysis availability and actual findings distinct.

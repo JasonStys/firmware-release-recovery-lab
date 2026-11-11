@@ -17,6 +17,7 @@ pub mod model;
 pub mod package;
 pub mod preflight;
 pub mod store;
+pub mod studio;
 pub mod transition;
 
 pub use agent::{CampaignReport, UpdateAgent, run_fault_campaign};

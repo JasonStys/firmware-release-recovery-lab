@@ -14,4 +14,5 @@ cargo test --all-targets --all-features --locked
 cargo doc --no-deps --document-private-items --locked
 cargo run --release --locked -- fault-campaign --iterations 100 --output artifacts/fault-campaign.json
 python scripts/generate_code_index.py
+python scripts/generate_file_guide.py
 python scripts/verify_repo.py

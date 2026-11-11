@@ -1,0 +1,13 @@
+{
+  "name": "firmware-release-recovery-lab-repository",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "code-index": "python scripts/generate_code_index.py",
+    "validate": "python scripts/verify_repo.py"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  }
+}

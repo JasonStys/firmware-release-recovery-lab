@@ -1,0 +1,106 @@
+# Native application implementation validation — 2026-11-11
+
+By Jason Stys. This report records local source and first compiled-candidate observations.
+Hosted CI, processed CodeQL, release publication and independent installation are separate gates.
+The version 0.2.0 application candidate remains an offline educational simulation.
+
+## What changed and why
+
+The existing Rust signed-package, A/B state machine, read-only fleet review and metadata fault
+campaign now have a genuine editable application. Users can supply supported custom devices,
+image bytes and packages; reorder lifecycle operations and named interruptions; inspect actual
+before/after decisions; save, find and export evidence; and reopen their workspace. This makes
+the original reliability work usable without replacing it with a second implementation or a
+fixed demonstration executable. The native owner keeps the listener and workspace lock until
+owned work has finished, including a held request during repeated close attempts.
+
+Actual additional defects caught during implementation:
+
+- Serde's internally tagged unit action variants did not enforce the expected unknown-field
+  refusal. Structured empty variants now reject unsigned host-command fields; original package
+  structs also reject undeclared fields rather than silently dropping imported metadata.
+- Python 3.14 accepted JSON nesting deeper than a previous implicit recursion assumption.
+  Admission now uses an explicit iterative maximum depth 64; the actual HTTP regression uses 400.
+- The unchanged RustSec deny-warnings gate detected `RUSTSEC-2026-0486` in locked `rustix 1.1.5`.
+  Only that compatible lock entry was moved to patched 1.1.6. No ignore was added; affected xattr
+  reachability in the app was not asserted solely from the advisory's presence.
+- Opening-purpose labels copied from prior packaging infrastructure contained mojibake separators.
+  New packaging labels use ASCII; actual verbatim upstream license bytes are preserved.
+
+## Observed local gates
+
+| Gate | Observation and denominator |
+| --- | --- |
+| Rust unit/integration/property/domain |30 tests:9 library,1 persisted lifecycle,2 property,8 original preflight and10 new studio cases |
+| Original recovery campaign |1,200 scenarios,1,200 recovered/safety checks,400 prior-state and 800 forward recoveries; original oracle unchanged |
+| Strict compiler tooling | rustfmt, all-target/all-feature Clippy with warnings denied, locked tests and private-item Rustdoc |
+| Python application/source/package |160 parent tests plus13 actual Tcl notice cases in a fresh bounded child interpreter; no retries/skips |
+| Whole application coverage |93.91% combined statement/branch over 646 statements and 208 branches; unchanged 90% floor, owner UI included |
+| TypeScript/model/build |5 actual input/binary/UTF-8/closed-schema tests;4 production assets,39,285 bytes against90,000-byte cap |
+| Source browser |7 saved actual workflows, fresh source owner, real Chromium edits/imports/downloads and normal exit0 |
+| First compiled Windows candidate | Actual extracted executable, the same7 browser/domain workflows, normal 0/0 and7 records after restart; explicitly dirty local candidate |
+| Dependency review | Exact Python hash locks and npm lock installation/advisory gates; RustSec rerun after the narrow patched-lock update |
+| Repository documentation | Original artifact/neutral-wording contracts retained, expanded authored-language headers, generated source file guide/index |
+
+These are local denominators, not a claim that every supported OS has already passed. A source
+run is labelled development and never used as native acceptance. The first compiled candidate's
+`RELEASE.json` explicitly records its dirty-source status; it is not a release artifact. Final
+clean-source package acceptance is mandatory in the three-OS desktop workflow before a checksum
+is written. Exact accepted build identities belong to their own metadata/validation receipts.
+
+## Independent user journeys and refusal oracles
+
+The real browser enters a custom hardware ID and binary image containing 0,1,127,128,255. A healthy
+stage/activate/boot/confirm sequence reaches confirmed B at generation 4; the exact downloaded
+image SHA-256 is independently computed. The four recorded step generations are 1,2,3,4.
+A changed signed image is blocked at generation 0 with the remaining 3 steps explicitly unattempted.
+Unsigned imported manifest fields and an excessive campaign budget are HTTP 400 refusals and do
+not create a record or replace the selected evidence.
+
+An exhausted single trial returns to confirmed A at generation 4. Fleet review retains all 3 device
+rows and stops at cohort 2 while full initial/final state is equal. A one-iteration original campaign
+produces 12 scenarios with 4 stable and 8 forward recoveries. A named post-write metadata interruption
+recovers generation 0 and records3 unattempted steps. Importing a report with forged result claims
+reexecutes its input and yields the actual independently checked outcome and a new record ID.
+
+Actual selected input/package/evidence downloads, literal `%_` history filtering, 390px layout,
+keyboard focus, zero page errors, retained selected evidence on invalid input and second-launch
+history are part of the consumer. Profile tests use real temporary files, held locks and actual
+junction/hardlink cases rather than weakening normal admission. Engine negative tests cover real
+nonzero/timeout boundaries and malformed response contracts; inert fake children exercise refusal
+only, never substitute for accepted Rust results.
+
+## Packaging and distribution review
+
+The builder requires coherent 0.2.0 Cargo/Python/npm/UI versions and a final patched3.14 runtime
+(minimum 3.14.10). A clean exact Git checkout is mandatory; the local dirty override is forbidden
+in CI. It compiles the actual Rust engine and UI, binds their bytes and source, and refuses to
+overwrite output. Windows ZIP and POSIX tar.gz are safely extracted with root/member/link/size
+guards before executing the actual packaged app. No downloaded Actions archive is executed.
+
+Actual pinned Rust 1.98.1 standard-library copyright and all 12 referenced license files are
+retained and reverified after extraction. Target-resolved Cargo terms are bound to Cargo.lock
+crate checksums and actual registry archive/source notice bytes, then matched to the collected
+source manifest after extraction. The first Windows candidate collected 74 source packages and 146
+notice files; this is a conservative native-target dependency graph, not a count of linked crates.
+Python, Tcl/Tk and PyInstaller notices come from actual installed distributions/runtime resources.
+There is no all-MIT or legal-certification claim.
+
+CI retains all original Cargo/Clippy/Rustdoc/RustSec and 1,200-campaign gates, adds three-OS source
+and actual extracted native acceptance, and adds the supported JavaScript/TypeScript CodeQL lane.
+Action pins, read-only permissions, finite jobs and original coverage/asset caps remain. No
+application binary or private profile is uploaded automatically; there is no release or install
+permission in the packaging workflow.
+
+## Remaining limits
+
+- Public demo signing material, inert images and supplied health assumptions only; no secure boot,
+  device flashing, real firmware delivery or physical power-loss guarantee.
+- Single OS-user profile, no login roles or encryption from the PC owner; hostile concurrent
+  namespace replacement by that owner is outside the admission contract.
+- Automated native launches use explicit no-window/no-browser mode; real Tk source controls are
+  tested separately. Default-browser integration and normal OS installer transactions are unclaimed.
+- Imported JSON is validated structured data, not arbitrary document conversion or original file
+  whitespace certification. Nested preflight plan fingerprints include temporary physical paths.
+- An error-free scanner/job and zero known dependency advisories are distinct from proving absence
+  of defects. Exact hosted source analyses and main checks must be reviewed before publication.

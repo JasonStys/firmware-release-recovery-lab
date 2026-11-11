@@ -2,8 +2,9 @@
 
 ## Development environment
 
-Install Git, Python 3.11 or newer, and Rust through rustup. The repository pins Rust 1.90.0
-with `rustfmt` and Clippy components. Fork or branch from `main`; never commit real firmware,
+Install Git, final Python 3.14.10 or later 3.14, Node 24 and Rust through rustup. The repository pins
+Rust 1.98.1 with `rustfmt`, Clippy and rust-docs components. Use a project-local Python environment
+with the exact hash-locked graphs and `npm --prefix web ci --ignore-scripts`. Fork or branch from `main`; never commit real firmware,
 device credentials, signing keys, customer data, or proprietary specifications.
 
 ## Change workflow
@@ -13,6 +14,8 @@ device credentials, signing keys, customer data, or proprietary specifications.
 3. Keep transition decisions pure; isolate filesystem behavior in `store.rs`.
 4. Document new states, fault points, trust assumptions, and operational consequences.
 5. Run `bash scripts/validate.sh` before opening a pull request.
+6. For application changes also run the whole-package coverage/owner/browser/native gates in
+   [testing](docs/testing.md); keep the original CLI and 1,200-scenario campaign intact.
 
 ## Style
 
@@ -39,4 +42,8 @@ All CI and security checks must pass before merge.
 
 Update `CHANGELOG.md`, run the full 1,200-scenario campaign, review the dependency audit, and
 build from a clean checkout with `--locked`. Tag releases using semantic versioning.
+Native packaging must use actual source-bound resources and corresponding runtime/crate notices,
+then pass the extracted executable's original GUI/import/export/restart consumer on all supported
+platforms before publication. Keep private workspaces, credentials and raw local logs untracked.
+Portable application acceptance is not an installer or hardware-safety certification.
 

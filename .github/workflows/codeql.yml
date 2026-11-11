@@ -22,7 +22,7 @@ concurrency:
 jobs:
   analyze:
     name: CodeQL (${{ matrix.language }})
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     permissions:
       contents: read
@@ -32,6 +32,8 @@ jobs:
       matrix:
         include:
           - language: rust
+            build-mode: none
+          - language: javascript-typescript
             build-mode: none
           - language: python
             build-mode: none
@@ -44,7 +46,7 @@ jobs:
           persist-credentials: false
       - name: Install the repository's pinned Rust toolchain
         if: matrix.language == 'rust'
-        run: rustup toolchain install 1.90.0 --profile minimal
+        run: rustup toolchain install 1.98.1 --profile minimal
       - name: Resolve only the locked Rust dependency graph
         if: matrix.language == 'rust'
         run: cargo fetch --locked

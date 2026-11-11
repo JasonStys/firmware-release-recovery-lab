@@ -1,0 +1,20 @@
+# File: Defines native-studio metadata and independent Python validation gates.
+[project]
+name = "firmware-release-recovery-lab"
+version = "0.2.0"
+requires-python = ">=3.14.10"
+description = "Owned offline release, rollback and recovery application for the original Rust engines"
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers"
+[tool.coverage.run]
+source = ["firmware_studio"]
+branch = true
+[tool.coverage.report]
+show_missing = true
+fail_under = 90
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

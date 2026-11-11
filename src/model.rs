@@ -42,6 +42,7 @@ pub enum LabError {
 
 /// A strictly ordered `major.minor.patch` firmware version.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Version {
     /// Breaking release number.
     pub major: u16,

@@ -1,0 +1,2 @@
+# File: The native application uses only the Python standard library.
+# Build and development dependencies have separate exact hash locks.
