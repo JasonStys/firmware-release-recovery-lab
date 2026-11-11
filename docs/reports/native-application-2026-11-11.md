@@ -48,6 +48,14 @@ run is labelled development and never used as native acceptance. The first compi
 clean-source package acceptance is mandatory in the three-OS desktop workflow before a checksum
 is written. Exact accepted build identities belong to their own metadata/validation receipts.
 
+The subsequent clean-source Windows build at
+[`1db8c52628c1c4be6159e82aa96e8726001cbc08`](https://github.com/JasonStys/firmware-release-recovery-lab/tree/1db8c52628c1c4be6159e82aa96e8726001cbc08)
+also passed the complete extracted executable consumer: seven actual saved rehearsals,
+normal exits 0/0 and retained history after restart. Its ZIP SHA-256 was
+`58c04e7ca42339bd58dcdec3926ce9a0b25c0d3d6dfa5a8f43ba79c1347efc17`.
+This is a source-bound local portable-package observation, not a published release, independent
+installation or a result from macOS/Linux. Later source/CI review retains its own exact revision.
+
 ## Independent user journeys and refusal oracles
 
 The real browser enters a custom hardware ID and binary image containing 0,1,127,128,255. A healthy
