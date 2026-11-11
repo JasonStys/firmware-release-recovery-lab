@@ -256,13 +256,34 @@ try {
   await check("#selected", healthy.id);
   assert.deepEqual(await downloaded("#export-evidence"), healthy);
   assert.equal((await api("/api/history")).total, 7);
-  await page.setViewportSize({ width: 390, height: 844 });
-  assert.equal(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth > innerWidth,
-    ),
-    false,
-  );
+  await check("#identity", expectedSource);
+  const mobileLayouts = [];
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    const layout = await page.evaluate(() => {
+      const identity = document.getElementById("identity");
+      if (!identity) throw new Error("Actual source identity is absent");
+      return {
+        viewport: innerWidth,
+        documentWidth: document.documentElement.scrollWidth,
+        overflow: document.documentElement.scrollWidth > innerWidth,
+        identityWidth: identity.getBoundingClientRect().width,
+        identityScrollWidth: identity.scrollWidth,
+        identityOverflowX: getComputedStyle(identity).overflowX,
+      };
+    });
+    mobileLayouts.push(layout);
+    console.log(JSON.stringify({ mobileLayout: layout }));
+    assert.equal(
+      layout.overflow,
+      false,
+      `Actual mobile application overflows: ${JSON.stringify(layout)}`,
+    );
+    assert(
+      !["hidden", "clip"].includes(layout.identityOverflowX),
+      "Source identity was clipped instead of wrapped",
+    );
+  }
   await page.locator("#export-input").focus();
   assert.equal(
     await page
@@ -296,6 +317,7 @@ try {
         negativeInputsPreserved: true,
         importedClaimsRerun: true,
         mobileOverflow: false,
+        mobileLayouts,
         pageErrors: errors,
       },
       null,

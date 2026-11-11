@@ -36,7 +36,7 @@ Actual additional defects caught during implementation:
 | Strict compiler tooling | rustfmt, all-target/all-feature Clippy with warnings denied, locked tests and private-item Rustdoc |
 | Python application/source/package |161 parent tests plus13 actual Tcl notice cases in a fresh bounded child interpreter; no retries/skips |
 | Whole application coverage |93.91% combined statement/branch over 646 statements and 208 branches; unchanged 90% floor, owner UI included |
-| TypeScript/model/build |5 actual input/binary/UTF-8/closed-schema tests;4 production assets,39,285 bytes against90,000-byte cap |
+| TypeScript/model/build |5 actual input/binary/UTF-8/closed-schema tests;4 production assets,39,296 bytes against90,000-byte cap after the mobile-wrap repair |
 | Source browser |7 saved actual workflows, fresh source owner, real Chromium edits/imports/downloads and normal exit0 |
 | First compiled Windows candidate | Actual extracted executable, the same7 browser/domain workflows, normal 0/0 and7 records after restart; explicitly dirty local candidate |
 | Dependency review | Exact Python hash locks and npm lock installation/advisory gates; RustSec rerun after the narrow patched-lock update |
@@ -78,6 +78,15 @@ normal browser launch/page input must pass, a missing executable must fail, the 
 must match the npm lock and `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` is refused. No host
 validation bypass, browser flag, test assertion, native journey, Xvfb requirement, job deadline or
 application timeout is relaxed. This does not claim coverage of optional writing-system font sets.
+
+The subsequent Linux native consumer reached the real compiled app and caught horizontal overflow
+at390px. A preserved clean Windows compiled build independently reproduced the defect at320px:
+the document measured347px because the header's real40-character Rust source identity did not wrap
+(333px text width). The selected evidence and history already wrapped their identifiers; the
+header now does too. No overflow hiding or clipped identity is used. The original390px assertion
+remains and the native consumer additionally checks320px, full source-identity presence and
+recorded geometry. The Linux failure and original Windows diagnostic are retained rather than
+being relabelled as passes; the fix needs fresh exact-head compiled acceptance.
 
 ## Independent user journeys and refusal oracles
 

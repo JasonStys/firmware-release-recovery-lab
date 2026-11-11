@@ -1790,6 +1790,9 @@ they are navigation aids, not unused-code or whole-program analysis.
 | 230 | `const` | `rerunResponse` |
 | 239 | `const` | `response` |
 | 241 | `const` | `rerun` |
+| 260 | `const` | `mobileLayouts` |
+| 263 | `const` | `layout` |
+| 264 | `const` | `identity` |
 
 ## `tools/package_app.py`
 

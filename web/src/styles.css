@@ -183,6 +183,7 @@ pre {
   margin: 5px 0;
   overflow-wrap: anywhere;
 }
+#identity,
 #summary p,
 #selected {
   overflow-wrap: anywhere;
