@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "repository": "firmware-release-recovery-lab",
+  "runtimeVersion": "0.2.1",
+  "runtimeSource": "81658bc482aea93e7f7e32dabaacee64e7b5b958",
+  "createdAt": "2026-11-11T19:21:39.413Z",
+  "author": "Jason Stys",
+  "document": "windows-application-guide-0.2.1.docx",
+  "sha256": "4b3806d35e73a69d0936d1b1042219b404584e82addb6b0b1d2251908874c723",
+  "screenshots": [
+    {
+      "file": "01-custom-promotion.png",
+      "sha256": "dcd781ad96319c1af22730bf010910c02483c7dc1a6f68046cd39d3c314ced6d",
+      "width": 1152,
+      "height": 635,
+      "caption": "All four supplied actions completed for the custom fictional device. The final confirmed B slot and generation four come from the actual Rust simulation; no hardware was flashed."
+    },
+    {
+      "file": "02-cohort-evidence.png",
+      "sha256": "19f12a1dafa4291b1c4259a96d9313a10a3f50d3e35692453b8d108ef1520ceb",
+      "width": 1152,
+      "height": 551,
+      "caption": "The second cohort rolls back under supplied exhausted-attempt health. The third device remains explicitly unattempted. The preflight is read only and does not deploy to a fleet."
+    }
+  ],
+  "snippets": [
+    {
+      "file": "web/src/app.ts",
+      "first": 333,
+      "last": 349,
+      "sha256": "a7a85d4b0db38a02fb337bbc9269bddeeb2481796d466aefe36136c96a16425b",
+      "url": "https://github.com/JasonStys/firmware-release-recovery-lab/blob/81658bc482aea93e7f7e32dabaacee64e7b5b958/web/src/app.ts#L333"
+    }
+  ],
+  "observedTests": [
+    {
+      "name": "Installed domain workflows",
+      "observed": "The original seven retained workflows and exact downloads passed, including real selected-file and completed API-response scheduling. Both installed launches exited normally.",
+      "result": "Passed"
+    },
+    {
+      "name": "Actual retained workspace upgrade",
+      "observed": "Old 0.2.0 created seven real records. Version 0.2.1 retained their exact bodies, executed a new 12-case campaign and reopened all eight; previous capabilities were refused and all three owners exited zero.",
+      "result": "Passed"
+    },
+    {
+      "name": "Original source and security",
+      "observed": "161 Python tests plus 13 Tcl cases, 30 Rust tests, five TypeScript tests and 1200 recovery cases passed. All four main workflows and four actual raw CodeQL categories passed.",
+      "result": "Passed"
+    },
+    {
+      "name": "Distribution and desktop icon",
+      "observed": "Five downloaded files matched provider hashes and all 242 files in each installed version stayed unchanged. Only the two known shortcut targets were updated after exact link backups; the old app and open old window were preserved.",
+      "result": "Passed"
+    }
+  ],
+  "visualReview": {
+    "approved": true,
+    "reviewer": "audit_cyber",
+    "ooxmlSchema": "passed",
+    "pages": [
+      {
+        "page": 1,
+        "sha256": "dfcce12ca1a0edccaaa67a4232f9a3339d857ec2841baf940b577b95a085f735"
+      },
+      {
+        "page": 2,
+        "sha256": "66bc179105af7eac97015f9178d6c3512f004053b6c7bd6e636adfafdd9b00f3"
+      },
+      {
+        "page": 3,
+        "sha256": "38b9a0b68ac1c9d8ce4ccda698dda8dd4e75071230a108d91385825ad1a3ea26"
+      },
+      {
+        "page": 4,
+        "sha256": "ef88b71f44c57f6ede063860e447fe34ea3585cdb8a3f28ba4232892b13af16f"
+      }
+    ],
+    "scope": "All four final pages individually inspected at original resolution; exact installed synthetic screenshots and immutable code; no ordinary user data."
+  }
+}

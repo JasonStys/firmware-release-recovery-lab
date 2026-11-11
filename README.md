@@ -253,3 +253,14 @@ terms and source identities are retained; this is not a claim that every bundled
 Start with the [organized handbook](docs/handbook.md) for current usage, design, security and test guidance. Reviewed downloadable editions: [project-guide.docx](docs/reports/project-guide.docx) · [validation-review.docx](docs/reports/validation-review.docx) · [validation-evidence.xlsx](docs/reports/validation-evidence.xlsx).
 
 [Publication identities and source scope](docs/reports/publications.json) · [Documentation validation record](docs/reports/documentation-refresh-2026-11-09.md). Historical results retain their own tested revision and date.
+
+
+## Current installed application guide
+
+The published **0.2.1** application has a [four-page illustrated guide](docs/reports/windows-application-guide-0.2.1.docx) with actual installed screenshots, a practical journey, source excerpts and operating limits. Read its [installed validation report](docs/reports/installed-windows-0.2.1-2026-11-11.md) and [review manifest](docs/reports/windows-application-guide-0.2.1.json) for the exact runtime source and scope. Historical documentation remains available.
+
+New documentation:
+
+- [docs/reports/windows-application-guide-0.2.1.docx](docs/reports/windows-application-guide-0.2.1.docx): Current four-page installed application guide with two actual screenshots, immutable source and operating limits.
+- [docs/reports/windows-application-guide-0.2.1.json](docs/reports/windows-application-guide-0.2.1.json): Exact Word, installed screenshot, immutable code and individually reviewed page identities.
+- [docs/reports/installed-windows-0.2.1-2026-11-11.md](docs/reports/installed-windows-0.2.1-2026-11-11.md): Observed installed workflows, distribution identity, practical instructions and precise validation limits.
