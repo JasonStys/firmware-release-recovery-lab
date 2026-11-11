@@ -21,7 +21,10 @@ Cargo builds, tests and RustSec audit. Missing analysis is never treated as zero
 
 ## Desktop application
 
-The **0.2.0 source candidate** adds the full application. A downloadable release is pending review;
+The **0.2.1 source candidate** retains the full application and corrects an asynchronous evidence-import
+status error: an import finishing during another active run is explicitly refused, without claiming
+it was rerun. See the [correction and validation record](docs/reports/async-evidence-import-2026-11-11.md).
+A downloadable release is pending review;
 this README does not represent a local build as a published or signed installer. The native build
 produces a Windows ZIP or a macOS/Linux tar.gz portable application, with hashes and exact source
 provenance. Extract the complete archive into a new application directory before launching

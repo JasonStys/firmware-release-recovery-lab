@@ -402,7 +402,7 @@ def test_source_resources_are_real_and_bounded():
     engine, assets, metadata = resources.load_resources()
     assert metadata["sourceCommit"] == "development" and len(assets) == 5
     assert b"Firmware Release Recovery Workbench" in assets["/"][1]
-    assert engine.identity["version"] == "0.2.0"
+    assert engine.identity["version"] == "0.2.1"
 
 
 @pytest.mark.parametrize(

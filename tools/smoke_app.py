@@ -119,7 +119,7 @@ def main():
     metadata = json.loads((executable.parent / "RELEASE.json").read_text(encoding="utf-8"))
     source = metadata["sourceCommit"]
     require(
-        metadata["version"] == "0.2.0" and metadata["product"] == "firmware-release-recovery-lab",
+        metadata["version"] == "0.2.1" and metadata["product"] == "firmware-release-recovery-lab",
         "Wrong native product",
     )
     rust_terms = executable.parent / "_internal/licenses/rust"
@@ -200,7 +200,7 @@ def main():
             require(process2.wait(timeout=20) == 0, "Restarted native owner did not exit normally")
             receipt = {
                 "passed": True,
-                "version": "0.2.0",
+                "version": "0.2.1",
                 "sourceCommit": source,
                 "sourceDirty": metadata["sourceDirty"],
                 "engineSha256": metadata["engineSha256"],

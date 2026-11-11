@@ -331,7 +331,10 @@ function setBusy(value: boolean): void {
 }
 
 async function run(value: JsonObject = currentInput()): Promise<void> {
-  if (busy) return;
+  if (busy)
+    throw new Error(
+      "Another rehearsal is already running; this loaded input has not been run. Wait for completion, then Run.",
+    );
   const captured = revision;
   setBusy(true);
   status("Running the original Rust engines in a fresh owned fictional lab…");

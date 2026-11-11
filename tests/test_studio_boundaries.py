@@ -87,7 +87,7 @@ def packaged_context(tmp_path, monkeypatch, engine):
     monkeypatch.setattr(resources, "Engine", lambda *args: engine)
     metadata = {
         "product": "firmware-release-recovery-lab",
-        "version": "0.2.0",
+        "version": "0.2.1",
         "sourceCommit": "a" * 40,
         "pythonVersion": resources.platform.python_version(),
         "engineSha256": engine.sha256,
